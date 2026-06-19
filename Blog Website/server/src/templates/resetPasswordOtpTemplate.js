@@ -1,11 +1,11 @@
-export const verificationOtpTemplate = (name, otp) => {
+export const passwordResetOtpTemplate = (name, email, otp) => {
     return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Email Verification - The Daily Binge</title>
+<title>Password Reset Request - The Daily Binge</title>
 </head>
 <body style="margin:0;padding:0;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;padding:50px 20px;">
@@ -22,18 +22,20 @@ export const verificationOtpTemplate = (name, otp) => {
 
 <tr>
 <td style="padding:20px 40px 40px 40px;">
-<h2 style="margin:0 0 16px 0;color:#18181b;font-family:'Georgia',serif;font-size:22px;font-weight:600;line-height:1.3;">Security Verification</h2>
+<h2 style="margin:0 0 16px 0;color:#18181b;font-family:'Georgia',serif;font-size:22px;font-weight:600;line-height:1.3;">Password Reset Request</h2>
+
 <p style="margin:0 0 20px 0;color:#3f3f46;font-size:15px;line-height:26px;">Hello ${name},</p>
-<p style="margin:0 0 30px 0;color:#3f3f46;font-size:15px;line-height:26px;">Thank you for registering with The Daily Binge. To complete your account setup and verify your identity, please use the secure verification code provided below.</p>
+
+<p style="margin:0 0 30px 0;color:#3f3f46;font-size:15px;line-height:26px;">We received a request to reset the password for the account associated with <strong>${email}</strong>. Please use the verification code below to authorize this change.</p>
 
 <div style="margin:35px 0;text-align:center;">
 <div style="display:inline-block;padding:16px 36px;background:#f4f4f5;color:#18181b;font-size:34px;font-weight:700;letter-spacing:8px;border-radius:8px;font-family:'Courier New',Courier,monospace;border:1px solid #e4e4e7;">${otp}</div>
 </div>
 
-<p style="margin:0 0 25px 0;color:#71717a;font-size:14px;line-height:24px;text-align:center;">This one-time code is confidential and valid for <strong>10 minutes</strong>.</p>
+<p style="margin:0 0 25px 0;color:#71717a;font-size:14px;line-height:24px;text-align:center;">This code will expire in <strong>10 minutes</strong> and can only be used once.</p>
 
 <div style="margin-top:35px;padding:20px;background:#fafafa;border:1px solid #e4e4e7;border-radius:6px;">
-<p style="margin:0;color:#71717a;font-size:13px;line-height:22px;"><strong>Security Note:</strong> If you did not initiate this request or create an account with us, please disregard this message. Your email address remains secure.</p>
+<p style="margin:0;color:#71717a;font-size:13px;line-height:22px;"><strong>Security Note:</strong> If you did not request a password reset, you can safely ignore this email. Your current password remains secure, and no changes have been made to your account.</p>
 </div>
 </td>
 </tr>
@@ -41,8 +43,7 @@ export const verificationOtpTemplate = (name, otp) => {
 <tr>
 <td style="padding:30px 40px;background:#fafafa;border-top:1px solid #e4e4e7;">
 <table width="100%" cellpadding="0" cellspacing="0">
-<tr><td style="color:#71717a;font-size:13px;line-height:20px;">Questions? Contact our support team by replying directly to this email.</td></tr>
-<tr><td style="padding-top:16px;color:#a1a1aa;font-size:12px;line-height:18px;">&copy; ${new Date().getFullYear()} The Daily Binge. All rights reserved.<br/>This is an automated security notification.</td></tr>
+<tr><td style="padding-top:16px;color:#a1a1aa;font-size:12px;line-height:18px;">&copy; ${new Date().getFullYear()} The Daily Binge. All rights reserved.<br/>This is an automated security notification regarding your account.</td></tr>
 </table>
 </td>
 </tr>
