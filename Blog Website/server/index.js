@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import userRouter from './src/modules/users/user.route.js';
+import blogRouter from './src/modules/Blog/blog.route.js';
 import connectDB from './src/config/mongoDB.js';
 import 'dotenv/config';
 
@@ -18,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());  
 
 app.use("/api/user", userRouter)
-
+app.user("/api/blog", blogRouter)
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

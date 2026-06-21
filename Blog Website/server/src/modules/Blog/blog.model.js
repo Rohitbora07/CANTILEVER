@@ -32,10 +32,10 @@ const blogSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    tags: {
-        type: [String],
+    tags: [{
+        type: String,
         default: []
-    },
+    }],
     category: {
         type: String,
         required: true
