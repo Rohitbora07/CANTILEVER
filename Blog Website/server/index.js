@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());  
 
 app.use("/api/user", userRouter)
-app.user("/api/blog", blogRouter)
+app.use("/api/blog", blogRouter)
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
