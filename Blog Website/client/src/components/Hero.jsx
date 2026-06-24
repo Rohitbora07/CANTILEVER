@@ -40,7 +40,7 @@ const FLOAT_CARDS = [
 
 export default function Hero() {
     return (
-        <section className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-16 bg-[#FCFCFA]">
+        <section className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-16 bg-[#e6fff1]">
             {/* BG Blobs & Grid Pattern */}
             <div className="absolute inset-0 -z-10">
                 {/* Soft Warm Beige Blobs */}
@@ -112,9 +112,9 @@ export default function Hero() {
                             className="flex flex-wrap gap-4"
                         >
                             <motion.button
-                                whileHover={{  backgroundColor: "white", color: "black", borderColor: "black" }}
+                                whileHover={{  backgroundColor: "#96E8BC", color: "black", borderColor: "black" }}
                                 whileTap={{ scale: 0.98 }}
-                                className="flex items-center gap-2 px-7 py-3.5 bg-black text-white font-medium rounded-lg shadow-sm border shadow-stone-200 transition-colors duration-200"
+                                className="flex items-center gap-2 px-7 py-3.5 bg-[#4B7F52] text-white font-medium rounded-lg shadow-sm border shadow-stone-200 transition-colors duration-200"
                             >
                                 Start Reading <ArrowRight size={16} />
                             </motion.button>
@@ -152,7 +152,7 @@ export default function Hero() {
                                 }}
                                 style={{ position: "absolute", left: card.x, top: card.y }}
                                 whileHover={{ scale: 1.03, zIndex: 10, shadow: "0 10px 25px -5px rgba(120,113,108,0.15)" }}
-                                className="w-76 bg-[#FAFAFact] rounded-xl p-5 border border-stone-200 cursor-pointer shadow-md transition-shadow duration-200"
+                                className="w-76 bg-[#a1dea4] rounded-xl p-5 border border-stone-200 cursor-pointer shadow-md transition-shadow duration-200"
                             >
                                 <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-stone-100 text-[#C98A5B] border border-stone-200 text-[11px] font-medium tracking-wide uppercase mb-3.5">
                                     <BookOpen size={10} />

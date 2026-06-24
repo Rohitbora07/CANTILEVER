@@ -1,12 +1,14 @@
-// import { useState } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
 import Sidebar from './components/SideBar'
+import FeaturedBlog from './components/FeaturedBlog'
+import BlogGrid from './components/BlogGrid'
+import TrendingBlogs from './components/TrendingBlogs'
 
 function App() {
   return (
-    <div className="min-h-screen bg-[#FCFCFA] font-sans antialiased text-stone-900">
+    <div className="min-h-screen bg-[#e6fff1] font-sans antialiased text-stone-900">
       <Navbar />
 
 
@@ -20,14 +22,15 @@ function App() {
               <Sidebar />
             </aside>
             <div className="flex-1 min-w-0 order-1 lg:order-2 space-y-12">
-
+              <FeaturedBlog />
+              <BlogGrid/>
+              <TrendingBlogs />
             </div>
 
           </div>
         </div>
       </main>
 
-      {/* Premium Studio Footer */}
       <Footer />
     </div>
   )
