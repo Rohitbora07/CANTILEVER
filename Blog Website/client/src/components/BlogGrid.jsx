@@ -50,14 +50,14 @@ export default function BlogGrid() {
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-stone-200/60">
                 <div className="flex items-center gap-2.5">
                     <div className="w-7 h-7 rounded-lg border border-stone-300 flex items-center justify-center bg-stone-50/50">
-                        <Globe size={13} className="text-[#C98A5B]" />
+                        <Globe size={13} className="text-[#0077CC]" />
                     </div>
                     <h2 className="text-xl font-serif font-medium tracking-tight text-stone-900">Latest Articles</h2>
                 </div>
 
                 <a
                     href="#"
-                    className="flex items-center gap-1 text-xs font-medium uppercase tracking-wider text-[#C98A5B] hover:text-[#B67A4B] transition-colors"
+                    className="flex items-center gap-1 text-xs font-medium uppercase tracking-wider text-[#0077CC] hover:text-[#005FA3] transition-colors"
                 >
                     View all <ArrowRight size={13} />
                 </a>

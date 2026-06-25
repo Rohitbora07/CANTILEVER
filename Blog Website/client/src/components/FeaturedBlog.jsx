@@ -26,7 +26,7 @@ export default function FeaturedBlog() {
 
             <div className="flex items-center gap-2.5 mb-6">
                 <div className="w-7 h-7 rounded-lg border border-stone-300 flex items-center justify-center bg-stone-50/50">
-                    <Star size={13} className="text-[#C98A5B]" />
+                    <Star size={13} className="text-[#0077CC]" />
                 </div>
                 <h2 className="text-xl font-serif font-medium tracking-tight text-stone-900">Featured Story</h2>
             </div>
@@ -49,14 +49,14 @@ export default function FeaturedBlog() {
 
 
                     <div className="absolute top-5 left-5">
-                        <span className="px-3 py-1.5 rounded-md bg-[#F5E6D8] text-[#B67A4B] border border-[#E7C8AA] text-[11px] font-medium tracking-wider uppercase">
+                        <span className="px-3 py-1.5 rounded-md bg-[#E0F0FF] text-[#005FA3] border border-[#C8D8E8] text-[11px] font-medium tracking-wider uppercase">
                             {blog.category}
                         </span>
                     </div>
                 </div>
 
                 <div className="p-6 sm:p-10">
-                    <h3 className="text-2xl sm:text-3xl font-serif font-normal text-stone-900 tracking-tight leading-snug mb-4 group-hover:text-[#B67A4B] transition-colors duration-200">
+                    <h3 className="text-2xl sm:text-3xl font-serif font-normal text-stone-900 tracking-tight leading-snug mb-4 group-hover:text-[#0077CC] transition-colors duration-200">
                         {blog.title}
                     </h3>
 
@@ -106,7 +106,7 @@ export default function FeaturedBlog() {
                                 whileHover={{ y: -2 }}
                                 whileTap={{ scale: 0.98 }}
                                 transition={{ duration: 0.2 }}
-                                className="flex items-center gap-2 px-5 py-2.5 bg-[#C98A5B] hover:bg-[#B67A4B] text-white text-sm font-medium rounded-xl shadow-sm transition-colors duration-200"
+                                className="flex items-center gap-2 px-5 py-2.5 bg-[#0077CC] hover:bg-[#005FA3] text-white text-sm font-medium rounded-xl shadow-sm transition-colors duration-200"
                             >
                                 Read Story <ArrowRight size={14} />
                             </motion.button>

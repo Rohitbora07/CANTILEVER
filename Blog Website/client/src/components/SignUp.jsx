@@ -1,15 +1,9 @@
-import  { useState } from "react";
+// import  { useState } from "react";
 import { motion } from "motion/react";
-import { ArrowRight, Lock, Mail, Eye, EyeOff } from "lucide-react";
+import { ArrowRight, Lock, Mail, Eye, User } from "lucide-react";
 
-export default function LoginPage() {
-    const [showPassword, setShowPassword] = useState(false);
-    const [formData, setFormData] = useState({ email: "", password: "" });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Handle authenticated login logic
-    };
+function SignUp() {
 
     return (
         <div className="min-h-screen bg-[#FCFCFA] flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans antialiased text-stone-900">
@@ -21,17 +15,17 @@ export default function LoginPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    {/* Minimalist text logo replacing flashy icon brands */}
+                    {/* Minimalist text logo */}
                     <span className="font-serif italic text-2xl tracking-tight text-stone-900">
-                        The Journal <span className="text-[#0077CC]">.</span>
+                        The Daily Binge <span className="text-[#0077CC]">.</span>
                     </span>
                     <h2 className="mt-4 text-2xl font-serif font-normal tracking-tight text-stone-900">
-                        Welcome back
+                        Create your account
                     </h2>
                     <p className="mt-2 text-sm text-stone-500">
                         Or{" "}
                         <a href="#" className="font-medium text-[#0077CC] hover:text-[#005FA3] underline underline-offset-4 transition-colors">
-                            create a new reader account
+                            sign in to your existing account
                         </a>
                     </p>
                 </motion.div>
@@ -45,7 +39,28 @@ export default function LoginPage() {
                     transition={{ duration: 0.5, delay: 0.1 }}
                     className="bg-white py-8 px-4 border border-stone-200 rounded-2xl shadow-sm sm:px-10"
                 >
-                    <form className="space-y-5" onSubmit={handleSubmit}>
+                    <form className="space-y-5">
+
+                        {/* Full Name Field Wrapper */}
+                        <div>
+                            <label htmlFor="name" className="block text-xs font-medium uppercase tracking-wider text-stone-600 mb-1.5">
+                                Full Name
+                            </label>
+                            <div className="relative rounded-xl shadow-sm">
+                                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+                                    <User size={15} />
+                                </div>
+                                <input
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    autoComplete="name"
+                                    required
+                                    className="block w-full pl-10 pr-4 py-2.5 sm:text-sm bg-[#FCFCFA] border border-stone-200 rounded-xl text-stone-900 placeholder-stone-400 focus:outline-none focus:border-[#0077CC] focus:ring-1 focus:ring-[#0077CC] transition-all"
+                                    placeholder="John Doe"
+                                />
+                            </div>
+                        </div>
 
                         {/* Email Field Wrapper */}
                         <div>
@@ -62,8 +77,6 @@ export default function LoginPage() {
                                     type="email"
                                     autoComplete="email"
                                     required
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     className="block w-full pl-10 pr-4 py-2.5 sm:text-sm bg-[#FCFCFA] border border-stone-200 rounded-xl text-stone-900 placeholder-stone-400 focus:outline-none focus:border-[#0077CC] focus:ring-1 focus:ring-[#0077CC] transition-all"
                                     placeholder="name@domain.com"
                                 />
@@ -72,16 +85,9 @@ export default function LoginPage() {
 
                         {/* Password Field Wrapper */}
                         <div>
-                            <div className="flex items-center justify-between mb-1.5">
-                                <label htmlFor="password" className="block text-xs font-medium uppercase tracking-wider text-stone-600">
-                                    Password
-                                </label>
-                                <div className="text-xs">
-                                    <a href="#" className="font-medium text-[#005FA3] hover:text-stone-900 transition-colors">
-                                        Forgot password?
-                                    </a>
-                                </div>
-                            </div>
+                            <label htmlFor="password" className="block text-xs font-medium uppercase tracking-wider text-stone-600 mb-1.5">
+                                Password
+                            </label>
                             <div className="relative rounded-xl shadow-sm">
                                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
                                     <Lock size={15} />
@@ -89,40 +95,43 @@ export default function LoginPage() {
                                 <input
                                     id="password"
                                     name="password"
-                                    type={showPassword ? "text" : "password"}
-                                    autoComplete="current-password"
+                                    type="password"
+                                    autoComplete="new-password"
                                     required
-                                    value={formData.password}
-                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                                     className="block w-full pl-10 pr-10 py-2.5 sm:text-sm bg-[#FCFCFA] border border-stone-200 rounded-xl text-stone-900 placeholder-stone-400 focus:outline-none focus:border-[#0077CC] focus:ring-1 focus:ring-[#0077CC] transition-all"
                                     placeholder="••••••••"
                                 />
                                 <button
                                     type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
                                     className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-stone-400 hover:text-stone-600 transition-colors"
                                 >
-                                    {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                                    <Eye size={15} />
                                 </button>
                             </div>
                         </div>
 
-                        {/* Remember Me Toggle */}
-                        <div className="flex items-center justify-between pt-1">
-                            <div className="flex items-center">
+                        {/* Terms and Conditions Agreement */}
+                        <div className="flex items-start pt-1">
+                            <div className="flex items-center h-5">
                                 <input
-                                    id="remember-me"
-                                    name="remember-me"
+                                    id="terms"
+                                    name="terms"
                                     type="checkbox"
+                                    required
                                     className="h-4 w-4 text-[#0077CC] focus:ring-[#0077CC] border-stone-300 rounded accent-[#0077CC]"
                                 />
-                                <label htmlFor="remember-me" className="ml-2 block text-xs text-stone-600">
-                                    Remember this device
+                            </div>
+                            <div className="ml-2 text-xs">
+                                <label htmlFor="terms" className="text-stone-600">
+                                    I agree to the{" "}
+                                    <a href="#" className="font-medium text-[#0077CC] hover:underline">Terms of Service</a>
+                                    {" "}and{" "}
+                                    <a href="#" className="font-medium text-[#0077CC] hover:underline">Privacy Policy</a>
                                 </label>
                             </div>
                         </div>
 
-                        {/* Premium CTA Button */}
+                        {/* Register CTA Button */}
                         <div className="pt-2">
                             <motion.button
                                 whileHover={{ y: -1 }}
@@ -130,7 +139,7 @@ export default function LoginPage() {
                                 type="submit"
                                 className="w-full flex justify-center items-center gap-2 py-2.5 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-[#0077CC] hover:bg-[#005FA3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0077CC] transition-colors duration-200"
                             >
-                                Sign In <ArrowRight size={14} />
+                                Create Account <ArrowRight size={14} />
                             </motion.button>
                         </div>
                     </form>
@@ -142,7 +151,7 @@ export default function LoginPage() {
                                 <div className="w-full border-t border-stone-100" />
                             </div>
                             <div className="relative flex justify-center text-xs uppercase tracking-wider">
-                                <span className="px-3 bg-white text-stone-400">Secure Reader Access</span>
+                                <span className="px-3 bg-white text-stone-400">Secure Registration</span>
                             </div>
                         </div>
                     </div>
@@ -158,3 +167,5 @@ export default function LoginPage() {
         </div>
     );
 }
+
+export default SignUp

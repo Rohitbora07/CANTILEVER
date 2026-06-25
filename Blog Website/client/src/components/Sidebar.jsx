@@ -47,7 +47,7 @@ export default function Sidebar() {
                 className="bg-white rounded-xl border border-stone-200 shadow-sm p-5"
             >
                 <h3 className="font-serif font-medium text-stone-900 mb-4 flex items-center gap-2 text-base">
-                    <Folder size={16} className="text-[#C98A5B]" />
+                    <Folder size={16} className="text-[#0077CC]" />
                     Categories
                 </h3>
                 <div className="space-y-1">
@@ -63,10 +63,10 @@ export default function Sidebar() {
                             className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-stone-50 group transition-colors"
                         >
                             <div className="flex items-center gap-2.5">
-                                <cat.icon size={15} className="text-stone-400 group-hover:text-[#C98A5B] transition-colors" />
+                                <cat.icon size={15} className="text-stone-400 group-hover:text-[#0077CC] transition-colors" />
                                 <span className="text-sm text-stone-600 group-hover:text-stone-900 font-medium transition-colors">{cat.label}</span>
                             </div>
-                            <span className="text-xs text-stone-500 bg-stone-100 group-hover:bg-stone-200 group-hover:text-[#B67A4B] px-2 py-0.5 rounded transition-colors font-medium">
+                            <span className="text-xs text-stone-500 bg-stone-100 group-hover:bg-[#EBF1F8] group-hover:text-[#0077CC] px-2 py-0.5 rounded transition-colors font-medium">
                                 {cat.count.toLocaleString()}
                             </span>
                         </motion.a>
@@ -83,7 +83,7 @@ export default function Sidebar() {
                 className="bg-white rounded-xl border border-stone-200 shadow-sm p-5"
             >
                 <h3 className="font-serif font-medium text-stone-900 mb-4 flex items-center gap-2 text-base">
-                    <TrendingUp size={16} className="text-[#C98A5B]" />
+                    <TrendingUp size={16} className="text-[#0077CC]" />
                     Trending Topics
                 </h3>
                 <div className="space-y-2">
@@ -96,14 +96,14 @@ export default function Sidebar() {
                         >
                             <div className="flex items-center gap-2.5">
                                 <span className="text-xs font-mono font-bold text-stone-300 w-5">0{i + 1}</span>
-                                <Hash size={13} className="text-stone-400 group-hover:text-[#B67A4B]" />
+                                <Hash size={13} className="text-stone-400 group-hover:text-[#0077CC]" />
                                 <span className="text-sm font-medium text-stone-700 group-hover:text-stone-900">{topic.label}</span>
                             </div>
                             <motion.span
                                 initial={{ scale: 0.8 }}
                                 animate={{ scale: [0.8, 1.02, 1] }}
                                 transition={{ delay: i * 0.1 }}
-                                className="text-xs text-[#B67A4B] bg-stone-50 group-hover:bg-stone-100 px-2 py-0.5 rounded font-medium"
+                                className="text-xs text-[#0077CC] bg-stone-50 group-hover:bg-[#EBF1F8] px-2 py-0.5 rounded font-medium"
                             >
                                 {(topic.posts / 1000).toFixed(1)}K
                             </motion.span>
@@ -121,7 +121,7 @@ export default function Sidebar() {
                 className="bg-white rounded-xl border border-stone-200 shadow-sm p-5"
             >
                 <h3 className="font-serif font-medium text-stone-900 mb-4 flex items-center gap-2 text-base">
-                    <Star size={16} className="text-[#C98A5B]" />
+                    <Star size={16} className="text-[#0077CC]" />
                     Latest Topics
                 </h3>
                 <div className="space-y-2">
@@ -148,7 +148,7 @@ export default function Sidebar() {
                 className="bg-white rounded-xl border border-stone-200 shadow-sm p-5"
             >
                 <h3 className="font-serif font-medium text-stone-900 mb-4 flex items-center gap-2 text-base">
-                    <Tag size={16} className="text-[#C98A5B]" />
+                    <Tag size={16} className="text-[#0077CC]" />
                     Popular Tags
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -161,7 +161,7 @@ export default function Sidebar() {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.03 }}
                             whileHover={{ scale: 1.05, y: -1 }}
-                            className="px-3 py-1 text-xs font-medium rounded bg-stone-100 text-stone-600 border border-stone-200/60 hover:bg-stone-200/50 hover:text-stone-900 hover:border-stone-300 transition-colors cursor-pointer"
+                            className="px-3 py-1 text-xs font-medium rounded bg-[#EBF1F8] text-[#4A6580] border border-[#C8D8E8] hover:bg-stone-200/50 hover:text-stone-900 hover:border-stone-300 transition-colors cursor-pointer"
                         >
                             #{tag}
                         </motion.a>

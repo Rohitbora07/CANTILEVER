@@ -21,13 +21,13 @@ export function BlogCard({ blog, index }) {
                 />
 
                 <div className="absolute top-3 left-3">
-                    <span className="px-2.5 py-1 rounded bg-[#F5E6D8] border border-[#E7C8AA] text-[#B67A4B] text-[10px] font-medium tracking-wider uppercase">
+                    <span className="px-2.5 py-1 rounded bg-[#E0F0FF] border border-[#C8D8E8] text-[#005FA3] text-[10px] font-medium tracking-wider uppercase">
                         {blog.category}
                     </span>
                 </div>
 
                 <button
-                    className="absolute top-3 right-3 p-2 rounded-lg bg-white/95 border border-stone-200 text-stone-500 hover:text-[#B67A4B] shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                    className="absolute top-3 right-3 p-2 rounded-lg bg-white/95 border border-stone-200 text-stone-500 hover:text-[#0077CC] shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                 >
                     <Bookmark size={13} />
                 </button>
@@ -35,7 +35,7 @@ export function BlogCard({ blog, index }) {
 
             <div className="p-5 flex flex-col flex-1 justify-between bg-white">
                 <div>
-                    <h3 className="font-serif font-normal text-stone-900 leading-snug text-lg mb-2 group-hover:text-[#B67A4B] transition-colors duration-200 line-clamp-2">
+                    <h3 className="font-serif font-normal text-stone-900 leading-snug text-lg mb-2 group-hover:text-[#0077CC] transition-colors duration-200 line-clamp-2">
                         {blog.title}
                     </h3>
                     <p className="text-sm text-stone-600 leading-relaxed mb-5 line-clamp-2">

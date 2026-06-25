@@ -33,7 +33,7 @@ export default function TrendingBlogs() {
 
             <div className="flex items-center gap-2.5 mb-6">
                 <div className="w-7 h-7 rounded-lg border border-stone-300 flex items-center justify-center bg-stone-50/50">
-                    <Flame size={13} className="text-[#C98A5B]" />
+                    <Flame size={13} className="text-[#0077CC]" />
                 </div>
                 <h2 className="text-xl font-serif font-medium tracking-tight text-stone-900">Trending Now</h2>
             </div>
@@ -54,7 +54,7 @@ export default function TrendingBlogs() {
 
 
                                 <div className="absolute bottom-3 left-3">
-                                    <span className="px-2.5 py-0.5 rounded bg-[#F5E6D8] border border-[#E7C8AA] text-[#B67A4B] text-[10px] font-medium tracking-wider uppercase">
+                                    <span className="px-2.5 py-0.5 rounded bg-[#E0F0FF] border border-[#C8D8E8] text-[#005FA3] text-[10px] font-medium tracking-wider uppercase">
                                         {blog.category}
                                     </span>
                                 </div>
@@ -62,7 +62,7 @@ export default function TrendingBlogs() {
 
 
                             <div className="p-4 bg-white">
-                                <h3 className="font-serif font-normal text-stone-900 text-sm leading-snug mb-3 group-hover:text-[#B67A4B] transition-colors duration-200 line-clamp-2">
+                                <h3 className="font-serif font-normal text-stone-900 text-sm leading-snug mb-3 group-hover:text-[#0077CC] transition-colors duration-200 line-clamp-2">
                                     {blog.title}
                                 </h3>
 

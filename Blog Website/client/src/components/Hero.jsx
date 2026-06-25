@@ -40,7 +40,7 @@ const FLOAT_CARDS = [
 
 export default function Hero() {
     return (
-        <section className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-16 bg-[#e6fff1]">
+        <section className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-16 bg-[#E8F0F8]">
             {/* BG Blobs & Grid Pattern */}
             <div className="absolute inset-0 -z-10">
                 {/* Soft Warm Beige Blobs */}
@@ -112,15 +112,15 @@ export default function Hero() {
                             className="flex flex-wrap gap-4"
                         >
                             <motion.button
-                                whileHover={{  backgroundColor: "#96E8BC", color: "black", borderColor: "black" }}
+                                whileHover={{ backgroundColor: "#005FA3", color: "white", borderColor: "black" }}
                                 whileTap={{ scale: 0.98 }}
-                                className="flex items-center gap-2 px-7 py-3.5 bg-[#4B7F52] text-white font-medium rounded-lg shadow-sm border shadow-stone-200 transition-colors duration-200"
+                                className="flex items-center gap-2 px-7 py-3.5 bg-[#0077CC] text-white font-medium rounded-lg shadow-sm border shadow-stone-200 transition-colors duration-200"
                             >
                                 Start Reading <ArrowRight size={16} />
                             </motion.button>
-                            
+
                             <motion.button
-                                whileHover={{  backgroundColor: "#FCFCFA", borderColor: "#78716c" }}
+                                whileHover={{ backgroundColor: "#FCFCFA", borderColor: "#78716c" }}
                                 whileTap={{ scale: 0.98 }}
                                 className="flex items-center gap-2 px-7 py-3.5 bg-white border border-stone-300 text-stone-700 font-medium rounded-lg shadow-sm transition-all duration-200"
                             >
@@ -152,17 +152,17 @@ export default function Hero() {
                                 }}
                                 style={{ position: "absolute", left: card.x, top: card.y }}
                                 whileHover={{ scale: 1.03, zIndex: 10, shadow: "0 10px 25px -5px rgba(120,113,108,0.15)" }}
-                                className="w-76 bg-[#a1dea4] rounded-xl p-5 border border-stone-200 cursor-pointer shadow-md transition-shadow duration-200"
+                                className="w-76 bg-[#FFFFFF] rounded-xl p-5 border border-stone-200 cursor-pointer shadow-md transition-shadow duration-200"
                             >
                                 <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-stone-100 text-[#C98A5B] border border-stone-200 text-[11px] font-medium tracking-wide uppercase mb-3.5">
                                     <BookOpen size={10} />
                                     {card.category}
                                 </div>
-                                
+
                                 <h3 className=" font-medium text-stone-900 text-base leading-snug mb-4">
                                     {card.title}
                                 </h3>
-                                
+
                                 <div className="flex items-center justify-between pt-3 border-t border-stone-100">
                                     <div className="flex items-center gap-2">
                                         <div className={`w-5 h-5 rounded-full ${card.avatarColor} flex items-center justify-center text-[9px] font-bold`}>
@@ -181,7 +181,7 @@ export default function Hero() {
                         <motion.div
                             animate={{ y: [0, -8, 0] }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                            className="absolute bottom-4 right-4 bg-[#FAFAFA] rounded-xl px-4 py-3 shadow-md border border-stone-200 flex items-center gap-3.5"
+                            className="absolute bottom-4 right-4 bg-[#FFFFFF] rounded-xl px-4 py-3 shadow-md border border-stone-200 flex items-center gap-3.5"
                         >
                             <div className="w-9 h-9 rounded-lg bg-stone-100 border border-stone-200 flex items-center justify-center">
                                 <TrendingUp size={16} className="text-[#C98A5B]" />

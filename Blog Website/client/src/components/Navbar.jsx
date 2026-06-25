@@ -12,10 +12,10 @@ function Navbar({ onSearchOpen, isMobileMenuOpen, setIsMobileMenuOpen }) {
             className="fixed top-4 left-0 right-0 z-50 "
         >
             <div className="mx-auto max-w-[1500px] px-6 lg:px-8 ">
-                <div className="flex items-center justify-between rounded-3xl border border-stone-200  px-7 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.08)] bg-[#FCFCFA] ">
+                <div className="flex items-center justify-between rounded-3xl border border-[#C8D8E8]  px-7 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.08)] bg-[#FFFFFF]">
 
                     <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-black text-white">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#0077CC] text-white">
                             <PenSquare size={16} />
                         </div>
 
@@ -63,12 +63,12 @@ function Navbar({ onSearchOpen, isMobileMenuOpen, setIsMobileMenuOpen }) {
                             <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500" />
                         </button>
 
-                        <button className="rounded-2xl  bg-black px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-stone-800">
+                        <button className="rounded-2xl  bg-[#0D1B2A] px-5 py-2 text-sm font-semibold text-white transition-colors hover:hover:bg-[#0077CC]">
                             Sign In
                         </button>
 
                         <button
-                            className="rounded-2xl p-2.5 text-stone-500 transition-colors hover:bg-stone-100 hover:text-stone-900 md:hidden"
+                            className="rounded-2xl p-2.5 text-stone-500 transition-colors hover:hover:bg-[#EBF1F8] hover:text-stone-900 md:hidden"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         >
                             {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
@@ -98,7 +98,7 @@ function Navbar({ onSearchOpen, isMobileMenuOpen, setIsMobileMenuOpen }) {
                             </a>
                         ))}
 
-                        <button className="mt-4 w-full rounded-2xl bg-black py-3 text-sm font-semibold text-white transition-colors hover:bg-stone-800">
+                        <button className="mt-4 w-full rounded-2xl bg-[#0077CC] py-3 text-sm font-semibold text-white transition-colors hover:bg-stone-800">
                             Sign In
                         </button>
                     </motion.div>
