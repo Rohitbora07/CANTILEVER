@@ -1,9 +1,11 @@
 import { motion, AnimatePresence } from "motion/react";
 import { Bell, ChevronRight, Menu, PenSquare, Search, X } from "lucide-react";
+import { useNavigate } from "react-router-dom"
 
 const NAV_LINKS = ["Home", "Explore", "Bookmarks", "Profile"];
 
 function Navbar({ onSearchOpen, isMobileMenuOpen, setIsMobileMenuOpen }) {
+    const navigate = useNavigate()
     return (
         <motion.nav
             initial={{ y: -80, opacity: 0 }}
@@ -63,7 +65,9 @@ function Navbar({ onSearchOpen, isMobileMenuOpen, setIsMobileMenuOpen }) {
                             <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500" />
                         </button>
 
-                        <button className="rounded-2xl  bg-[#0D1B2A] px-5 py-2 text-sm font-semibold text-white transition-colors hover:hover:bg-[#0077CC]">
+                        <button
+                        onClick={()=> navigate("/sign-in")}
+                        className="rounded-2xl  bg-[#0D1B2A] px-5 py-2 text-sm font-semibold text-white transition-colors hover:hover:bg-[#0077CC]">
                             Sign In
                         </button>
 

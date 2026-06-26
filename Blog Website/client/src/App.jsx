@@ -6,13 +6,13 @@ import SignUp from './components/SignUp'
 import { Routes, Route, useLocation } from "react-router-dom"
 function App() {
   const location = useLocation()
-  const hideLayout = ["/login", "/sign-up"].includes(location.pathname);
+  const hideLayout = ["/sign-in", "/sign-up"].includes(location.pathname);
   return (
     <div>
     {!hideLayout && <Navbar />}
     <Routes>
       <Route path="/" element={<Home/>} />
-      <Route path="/login" element={<LoginPage/>} />
+      <Route path="/sign-in" element={<LoginPage/>} />
       <Route path="/sign-up" element={<SignUp/>} />
     </Routes>
     {!hideLayout && <Footer />}

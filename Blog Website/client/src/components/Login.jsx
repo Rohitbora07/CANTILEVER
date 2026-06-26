@@ -1,43 +1,39 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { motion } from "motion/react";
-import { ArrowRight, Lock, Mail, Eye, EyeOff } from "lucide-react";
+import { ArrowRight, Lock, Mail, Eye, EyeOff, ArrowLeft, CircleDashed } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import api from "../api/axios";
+import { LOGIN_ROUTE } from "../constants/route";
 
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
-    const [formData, setFormData] = useState({ email: "", password: "" });
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState("")
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle authenticated login logic
+        setLoading(true)
+        try{
+            const {data} = await api.post(LOGIN_ROUTE,{
+                email, password
+            })
+            navigate("/")
+            console.log(data)
+        }catch(err){
+            console.log(err)
+            setError(err.response.data.message)
+        }finally{
+            setLoading(false)
+        }
     };
 
+    const navigate = useNavigate()
+
     return (
-        <div className="min-h-screen bg-[#FCFCFA] flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans antialiased text-stone-900">
+        <div className="min-h-screen bg-[#FCFCFA] flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8 font-sans antialiased text-stone-900">
 
-            {/* Branding and Header */}
-            <div className="sm:mx-auto w-full max-w-md text-center px-4">
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    {/* Minimalist text logo replacing flashy icon brands */}
-                    <span className="font-serif italic text-2xl tracking-tight text-stone-900">
-                        The Journal <span className="text-[#0077CC]">.</span>
-                    </span>
-                    <h2 className="mt-4 text-2xl font-serif font-normal tracking-tight text-stone-900">
-                        Welcome back
-                    </h2>
-                    <p className="mt-2 text-sm text-stone-500">
-                        Or{" "}
-                        <a href="#" className="font-medium text-[#0077CC] hover:text-[#005FA3] underline underline-offset-4 transition-colors">
-                            create a new reader account
-                        </a>
-                    </p>
-                </motion.div>
-            </div>
-
-            {/* Main Authentication Card */}
             <div className="mt-8 sm:mx-auto w-full max-w-md px-4">
                 <motion.div
                     initial={{ opacity: 0, y: 15 }}
@@ -45,9 +41,35 @@ export default function LoginPage() {
                     transition={{ duration: 0.5, delay: 0.1 }}
                     className="bg-white py-8 px-4 border border-stone-200 rounded-2xl shadow-sm sm:px-10"
                 >
+                    <div className="sm:mx-auto w-full mb-6 max-w-md px-4">
+                        <div className="relative flex items-center justify-center">
+                            <div className="absolute left-0">
+                                <button
+                                    type="button"
+                                    onClick={() => navigate("/")}
+                                    className="inline-flex items-center justify-center p-2 rounded-xl text-stone-400 hover:text-blue-700 hover:bg-blue-50 border border-transparent hover:border-blue-100 transition-all duration-200"
+                                >
+                                    <ArrowLeft size={18} />
+                                </button>
+                            </div>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5 }}
+                                className="text-center"
+                            >
+                                <span className="font-serif font-extrabold italic text-2xl tracking-tight text-[#0077CC] block">
+                                    The Daily Binge
+                                </span>
+                                <h2 className="mt-1 text-2xl font-serif font-normal tracking-tight text-stone-900">
+                                    Welcome Back
+                                </h2>
+                            </motion.div>
+                        </div>
+                    </div>
                     <form className="space-y-5" onSubmit={handleSubmit}>
 
-                        {/* Email Field Wrapper */}
                         <div>
                             <label htmlFor="email" className="block text-xs font-medium uppercase tracking-wider text-stone-600 mb-1.5">
                                 Email Address
@@ -62,15 +84,14 @@ export default function LoginPage() {
                                     type="email"
                                     autoComplete="email"
                                     required
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     className="block w-full pl-10 pr-4 py-2.5 sm:text-sm bg-[#FCFCFA] border border-stone-200 rounded-xl text-stone-900 placeholder-stone-400 focus:outline-none focus:border-[#0077CC] focus:ring-1 focus:ring-[#0077CC] transition-all"
                                     placeholder="name@domain.com"
                                 />
                             </div>
                         </div>
 
-                        {/* Password Field Wrapper */}
                         <div>
                             <div className="flex items-center justify-between mb-1.5">
                                 <label htmlFor="password" className="block text-xs font-medium uppercase tracking-wider text-stone-600">
@@ -92,8 +113,8 @@ export default function LoginPage() {
                                     type={showPassword ? "text" : "password"}
                                     autoComplete="current-password"
                                     required
-                                    value={formData.password}
-                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value) }
                                     className="block w-full pl-10 pr-10 py-2.5 sm:text-sm bg-[#FCFCFA] border border-stone-200 rounded-xl text-stone-900 placeholder-stone-400 focus:outline-none focus:border-[#0077CC] focus:ring-1 focus:ring-[#0077CC] transition-all"
                                     placeholder="••••••••"
                                 />
@@ -107,22 +128,7 @@ export default function LoginPage() {
                             </div>
                         </div>
 
-                        {/* Remember Me Toggle */}
-                        <div className="flex items-center justify-between pt-1">
-                            <div className="flex items-center">
-                                <input
-                                    id="remember-me"
-                                    name="remember-me"
-                                    type="checkbox"
-                                    className="h-4 w-4 text-[#0077CC] focus:ring-[#0077CC] border-stone-300 rounded accent-[#0077CC]"
-                                />
-                                <label htmlFor="remember-me" className="ml-2 block text-xs text-stone-600">
-                                    Remember this device
-                                </label>
-                            </div>
-                        </div>
 
-                        {/* Premium CTA Button */}
                         <div className="pt-2">
                             <motion.button
                                 whileHover={{ y: -1 }}
@@ -130,31 +136,29 @@ export default function LoginPage() {
                                 type="submit"
                                 className="w-full flex justify-center items-center gap-2 py-2.5 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-[#0077CC] hover:bg-[#005FA3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0077CC] transition-colors duration-200"
                             >
-                                Sign In <ArrowRight size={14} />
+                            {
+                                loading ? <CircleDashed size={14} className=" animate-spin" /> :
+                                <p className="flex items-center gap-2">Sign In <ArrowRight size={14} /></p>
+                            }
+                                
                             </motion.button>
                         </div>
+                        { error && 
+                        <div className="text-red-500 text-sm mt-2 flex items-center gap-2">{error}</div>
+                        }
                     </form>
+                    <p className="mt-3 flex gap-2 flex-col items-center justify-center text-sm text-stone-500">
+                        Don't have an account ??{" "}
+                        <p
+                            onClick={() => navigate("/sign-up")}
+                            className="font-medium text-[#0077CC] hover:text-[#005FA3] underline underline-offset-4 transition-colors">
+                            create a new reader account
+                        </p>
+                    </p>
 
-                    {/* Clean Segment Divider */}
-                    <div className="mt-6">
-                        <div className="relative">
-                            <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-stone-100" />
-                            </div>
-                            <div className="relative flex justify-center text-xs uppercase tracking-wider">
-                                <span className="px-3 bg-white text-stone-400">Secure Reader Access</span>
-                            </div>
-                        </div>
-                    </div>
                 </motion.div>
             </div>
 
-            {/* Footer Utility Links */}
-            <div className="mt-8 text-center text-xs text-stone-400 space-x-4">
-                <a href="#" className="hover:text-stone-600 transition-colors">Privacy Policy</a>
-                <span>&bull;</span>
-                <a href="#" className="hover:text-stone-600 transition-colors">Terms of Service</a>
-            </div>
         </div>
     );
 }
