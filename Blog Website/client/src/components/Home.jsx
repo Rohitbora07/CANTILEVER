@@ -1,4 +1,3 @@
-
 import Hero from './Hero'
 import Sidebar from './SideBar'
 import FeaturedBlog from './FeaturedBlog'
