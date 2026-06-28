@@ -2,8 +2,8 @@ import { useState, useRef } from "react";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
-export default function TagInput() {
-    const [tags, setTags] = useState(["Design", "Technology"]);
+export default function TagInput({ tags, setTags }) {
+    
     const [input, setInput] = useState("");
     const inputRef = useRef(null);
 

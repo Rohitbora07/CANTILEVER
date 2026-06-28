@@ -4,6 +4,9 @@ import { ArrowLeft, PenLine } from "lucide-react";
 import CoverImageUpload from "../../components/writer/CoverImageUpload";
 import BlogEditorToolbar from "../../components/writer/BlogEditorToolbar";
 import PublishSidebar from "../../components/writer/PublishSidebar";
+import { useNavigate } from "react-router-dom";
+import api from "../../api/axios";
+import { CREATE_BLOG } from "../../constants/route";
 
 const wordCount = (text) => {
     const words = text.trim().split(/\s+/).filter(Boolean);
@@ -16,9 +19,36 @@ export default function CreateBlog() {
     const [title, setTitle] = useState("");
     const [subtitle, setSubtitle] = useState("");
     const [content, setContent] = useState("");
+    const [coverImage, setCoverImage] = useState(null);
+    const [category, setCategory] = useState("");
+    const [visibility, setVisibility] = useState("Public");
+    const [allowComments, setAllowComments] = useState(true);
+    const [tags, setTags] = useState([]);
 
     const words = wordCount(content);
     const minutes = readTime(words);
+
+    const navigate = useNavigate()
+
+    
+
+    const handlePublish = async () => {
+        console.log(coverImage);
+        try {
+            const formData = new FormData()
+            formData.append("title", title)
+            formData.append("content", content)
+            formData.append("category", category)
+            formData.append("tags", JSON.stringify(tags))
+            formData.append("visibility", visibility)
+            formData.append("coverImage", coverImage)
+            formData.append("allowComments", allowComments)
+            const {data} = await api.post(CREATE_BLOG,formData)
+            console.log(data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     return (
         <motion.div
@@ -31,7 +61,9 @@ export default function CreateBlog() {
             <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-stone-100">
                 <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                        <button className="flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors text-sm font-medium">
+                        <button
+                        onClick={()=> navigate("/")}
+                        className="flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors text-sm font-medium">
                             <ArrowLeft size={16} />
                             <span className="hidden sm:inline">Back</span>
                         </button>
@@ -49,7 +81,6 @@ export default function CreateBlog() {
                     {/* Stats */}
                     <div className="hidden md:flex items-center gap-5 text-xs text-stone-400 font-medium">
                         <span>{words.toLocaleString()} words</span>
-                        <span>{minutes} min read</span>
                         <span className="flex items-center gap-1.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block" />
                             Draft
@@ -75,58 +106,56 @@ export default function CreateBlog() {
                     <div className="flex-1 min-w-0">
 
                         {/* Cover image */}
-                        <CoverImageUpload />
+                        <CoverImageUpload preview={coverImage} setPreview={setCoverImage} />
 
                         {/* Title */}
-                        <div className="mb-4">
+                        <p className="text-3xl font-medium text-stone-500 mb-2 font-serif">Title</p>
+                        <div className="mb-4 border-2 backdrop:blur-sm border-stone-300 rounded-lg p-4">
+                        
                             <textarea
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 placeholder="Your post title…"
                                 rows={2}
-                                className="w-full resize-none outline-none text-[#0D1B2A] placeholder:text-stone-300 leading-tight font-serif"
-                                style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", fontWeight: 700, lineHeight: 1.2 }}
+                                className="w-full resize-none outline-none text-[#0D1B2A] placeholder:text-stone-300 font-serif text-base"
                             />
                         </div>
 
                         {/* Subtitle */}
-                        <div className="mb-8">
+                        <p className="text-3xl font-medium text-stone-500 mb-2 font-serif">Subtitle</p>
+                        <div className="mb-8 border-2 backdrop:blur-sm border-stone-300 rounded-lg p-4">
                             <textarea
                                 value={subtitle}
                                 onChange={(e) => setSubtitle(e.target.value)}
                                 placeholder="A brief subtitle or description…"
                                 rows={2}
-                                className="w-full resize-none outline-none text-stone-500 placeholder:text-stone-300 leading-relaxed"
-                                style={{ fontSize: "1.15rem" }}
+                                className="w-full resize-none outline-none text-stone-500 placeholder:text-stone-300 font-serif text-base"
                             />
                         </div>
 
                         {/* Divider */}
                         <div className="flex items-center gap-4 mb-6">
-                            <div className="flex-1 h-px bg-stone-100" />
-                            <span className="text-xs text-stone-300 font-medium tracking-widest uppercase">
+                            <div className="flex-1 h-px bg-stone-500" />
+                            <span className="text-xs text-stone-600 font-medium tracking-widest uppercase">
                                 Write
                             </span>
-                            <div className="flex-1 h-px bg-stone-100" />
+                            <div className="flex-1 h-px bg-stone-500" />
                         </div>
 
                         {/* Toolbar */}
                         <BlogEditorToolbar />
 
                         {/* Content editor */}
-                        <div className="relative">
+                        <div className="relative border border-stone-300 rounded-3xl p-6">
                             <textarea
                                 value={content}
                                 onChange={(e) => setContent(e.target.value)}
                                 placeholder="Start writing your story…
-
 Use the toolbar above to format text, add headings, insert images, quotes, code blocks, and more.
-
 Your work is saved automatically."
-                                className="w-full min-h-[520px] resize-none outline-none text-stone-700 placeholder:text-stone-300 leading-[1.85] text-[1.0625rem]"
+                                className="w-full min-h-[520px] resize-none outline-none text-stone-700 placeholder:text-stone-300 leading-[1.85]  text-[1.0625rem]"
                             />
 
-                            {/* Word count badge (bottom of textarea area) */}
                             {content.length > 0 && (
                                 <motion.div
                                     initial={{ opacity: 0 }}
@@ -146,9 +175,16 @@ Your work is saved automatically."
 
                     {/* Sidebar */}
                     <PublishSidebar
-                        onPublish={() => alert("Publishing…")}
+                        onPublish={handlePublish}
                         onDraft={() => alert("Saved as draft.")}
-                        onPreview={() => alert("Preview mode coming soon.")}
+                        setCategory={setCategory}
+                        category={category}
+                        setVisibility={setVisibility}
+                        visibility={visibility}
+                        setAllowComments={setAllowComments}
+                        allowComments={allowComments}
+                        tags={tags}
+                        setTags={setTags}
                     />
                 </div>
             </div>

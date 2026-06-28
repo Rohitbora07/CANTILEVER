@@ -1,6 +1,7 @@
 // import React from "react";
 import { motion } from "motion/react";
 import { Flame, ArrowRight, PenSquare, BookOpen, Clock3, TrendingUp } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const FLOAT_CARDS = [
     {
@@ -39,6 +40,7 @@ const FLOAT_CARDS = [
 ];
 
 export default function Hero() {
+    const navigate = useNavigate()
     return (
         <section className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-16 bg-[#E8F0F8]">
             {/* BG Blobs & Grid Pattern */}
@@ -120,6 +122,7 @@ export default function Hero() {
                             </motion.button>
 
                             <motion.button
+                            onClick={()=> navigate("/create-blog")}
                                 whileHover={{ backgroundColor: "#FCFCFA", borderColor: "#78716c" }}
                                 whileTap={{ scale: 0.98 }}
                                 className="flex items-center gap-2 px-7 py-3.5 bg-white border border-stone-300 text-stone-700 font-medium rounded-lg shadow-sm transition-all duration-200"

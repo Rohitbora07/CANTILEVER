@@ -2,8 +2,8 @@ import { useState, useRef } from "react";
 import { ImagePlus, X, Upload } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
-export default function CoverImageUpload() {
-    const [preview, setPreview] = useState(null);
+export default function CoverImageUpload({preview, setPreview}) {
+    // const [preview, setPreview] = useState(null);
     const [dragging, setDragging] = useState(false);
     const inputRef = useRef(null);
 

@@ -45,6 +45,11 @@ const blogSchema = new mongoose.Schema({
         enum: ['draft', 'published'],
         default: 'draft'
     },
+    visibility: {
+        type: String,
+        enum: ['public', 'private'],
+        default: 'public'
+    },
     publishedAt: {
         type: Date,
         default: null

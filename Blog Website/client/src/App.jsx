@@ -7,7 +7,7 @@ import CreateBlog from './pages/writer/CreateBlog'
 import { Routes, Route, useLocation } from "react-router-dom"
 function App() {
   const location = useLocation()
-  const hideLayout = ["/sign-in", "/sign-up"].includes(location.pathname);
+  const hideLayout = ["/sign-in", "/sign-up","/create-blog"].includes(location.pathname);
   return (
     <div>
     {!hideLayout && <Navbar />}
