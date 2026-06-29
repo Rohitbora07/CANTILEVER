@@ -1,29 +1,33 @@
 import { useState, useRef } from "react";
 import { ImagePlus, X, Upload } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { assets } from "../../../public/assets/assets"
 
 export default function CoverImageUpload({preview, setPreview}) {
     // const [preview, setPreview] = useState(null);
     const [dragging, setDragging] = useState(false);
     const inputRef = useRef(null);
 
-    const handleFile = (file) => {
-        if (!file || !file.type.startsWith("image/")) return;
-        const url = URL.createObjectURL(file);
-        setPreview(url);
-    };
+    const src = !preview ? assets.upload_area : preview instanceof File ? URL.createObjectURL(preview) : preview
 
-    const handleDrop = (e) => {
-        e.preventDefault();
-        setDragging(false);
-        const file = e.dataTransfer.files[0];
-        handleFile(file);
-    };
+    // let url = null;
+    // const handleFile = (file) => {
+    //     if (!file || !file.type.startsWith("image/")) return;
+    //     url = URL.createObjectURL(file);
+    //     // setPreview(url);
+    // };
 
-    const handleChange = (e) => {
-        const file = e.target.files[0];
-        handleFile(file);
-    };
+    // const handleDrop = (e) => {
+    //     e.preventDefault();
+    //     setDragging(false);
+    //     const file = e.dataTransfer.files[0];
+    //     // handleFile(file);
+    // };
+
+    // const handleChange = (e) => {
+    //     const file = e.target.files[0];
+    //     handleFile(file);
+    // };
 
     return (
         <div className="mb-8">
@@ -35,10 +39,11 @@ export default function CoverImageUpload({preview, setPreview}) {
                         style={{ aspectRatio: "16/7" }}
                     >
                         <img
-                            src={preview}
+                            src={src}
                             alt="Cover preview"
                             className="w-full h-full object-cover"
                         />
+                        {/* <input onChange={(e) => setPreview(e.target.files[0])} type='file' hidden /> */}
                         <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
                             <button
                                 onClick={() => inputRef.current?.click()}
@@ -65,7 +70,7 @@ export default function CoverImageUpload({preview, setPreview}) {
                         transition={{ duration: 0.25 }}
                         onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
                         onDragLeave={() => setDragging(false)}
-                        onDrop={handleDrop}
+                        // onDrop={handleDrop}
                         onClick={() => inputRef.current?.click()}
                         className={`w-full rounded-2xl border-2 border-dashed cursor-pointer flex flex-col items-center justify-center gap-3 transition-all duration-200 ${dragging
                                 ? "border-[#0077CC] bg-[#E0F0FF]"
@@ -93,7 +98,7 @@ export default function CoverImageUpload({preview, setPreview}) {
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={handleChange}
+                onChange={(e) => setPreview(e.target.files[0])}
             />
         </div>
     );

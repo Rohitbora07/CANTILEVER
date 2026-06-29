@@ -14,7 +14,7 @@ const Select = ({ label, value, onChange, options }) => {
                 className="w-full flex items-center justify-between px-4 py-3 rounded-xl border border-stone-200 bg-white text-sm text-stone-700 hover:border-stone-300 focus:outline-none focus:border-[#0077CC] focus:ring-2 focus:ring-[#E0F0FF] transition-all"
             >
                 <span className={value ? "text-stone-800" : "text-stone-400"}>
-                    {value || `Select ${label.toLowerCase()}`}
+                    {value || `Select ${label}`}
                 </span>
                 <ChevronDown
                     size={15}

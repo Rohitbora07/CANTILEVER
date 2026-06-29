@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { motion } from "motion/react";
-import { ArrowLeft, PenLine } from "lucide-react";
 import CoverImageUpload from "../../components/writer/CoverImageUpload";
 import BlogEditorToolbar from "../../components/writer/BlogEditorToolbar";
 import PublishSidebar from "../../components/writer/PublishSidebar";
-import { useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 import { CREATE_BLOG } from "../../constants/route";
 
@@ -21,19 +19,17 @@ export default function CreateBlog() {
     const [content, setContent] = useState("");
     const [coverImage, setCoverImage] = useState(null);
     const [category, setCategory] = useState("");
-    const [visibility, setVisibility] = useState("Public");
+    const [visibility, setVisibility] = useState("public");
     const [allowComments, setAllowComments] = useState(true);
     const [tags, setTags] = useState([]);
 
     const words = wordCount(content);
     const minutes = readTime(words);
 
-    const navigate = useNavigate()
 
     
 
     const handlePublish = async () => {
-        console.log(coverImage);
         try {
             const formData = new FormData()
             formData.append("title", title)
@@ -46,7 +42,7 @@ export default function CreateBlog() {
             const {data} = await api.post(CREATE_BLOG,formData)
             console.log(data)
         } catch (err) {
-            console.log(err)
+            console.log("Error:", err.response.data.message)
         }
     }
 
@@ -55,48 +51,9 @@ export default function CreateBlog() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="min-h-screen bg-white"
+            className="min-h-screen bg-white mt-20"
         >
             {/* Top bar */}
-            <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-stone-100">
-                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                        <button
-                        onClick={()=> navigate("/")}
-                        className="flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors text-sm font-medium">
-                            <ArrowLeft size={16} />
-                            <span className="hidden sm:inline">Back</span>
-                        </button>
-
-                        <div className="w-px h-5 bg-stone-200" />
-
-                        <div className="flex items-center gap-2">
-                            <PenLine size={16} className="text-[#0077CC]" />
-                            <span className="text-sm font-semibold text-stone-800">
-                                New post
-                            </span>
-                        </div>
-                    </div>
-
-                    {/* Stats */}
-                    <div className="hidden md:flex items-center gap-5 text-xs text-stone-400 font-medium">
-                        <span>{words.toLocaleString()} words</span>
-                        <span className="flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block" />
-                            Draft
-                        </span>
-                    </div>
-
-                    <div className="flex items-center gap-2 sm:hidden">
-                        <button className="text-xs text-stone-500 border border-stone-200 rounded-lg px-3 py-1.5 hover:bg-stone-50 transition-colors">
-                            Draft
-                        </button>
-                        <button className="text-xs bg-[#0077CC] hover:bg-[#005FA3] text-white rounded-lg px-3 py-1.5 font-semibold transition-colors">
-                            Publish
-                        </button>
-                    </div>
-                </div>
-            </header>
 
             {/* Body */}
             <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 py-10">

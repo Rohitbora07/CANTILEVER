@@ -61,16 +61,16 @@ export default function PublishSidebar({ onPublish, onDraft, setCategory, catego
                         label="Visibility"
                         value={visibility}
                         onChange={setVisibility}
-                        options={["Public", "Private"]}
+                        options={["public", "private"]}
                     />
                     <div className="flex items-start gap-2.5 p-3 bg-stone-50 rounded-xl border border-stone-100">
-                        {visibility === "Public" ? (
+                        {visibility === "public" ? (
                             <Globe size={14} className="text-[#0077CC] mt-0.5 flex-shrink-0" />
                         ) : (
                             <Lock size={14} className="text-stone-400 mt-0.5 flex-shrink-0" />
                         )}
                         <p className="text-xs text-stone-500 leading-relaxed">
-                            {visibility === "Public"
+                            {visibility === "public"
                                 ? "This post will be visible to everyone on the internet."
                                 :  "Only you can see this post. It won't appear publicly."}
                         </p>
