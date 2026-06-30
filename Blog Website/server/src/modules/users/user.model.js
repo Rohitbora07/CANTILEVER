@@ -52,11 +52,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
-    website: {
+    github: {
         type: String,
         default: ""
     },
-    github: {
+    instagram: {
         type: String,
         default: ""
     },

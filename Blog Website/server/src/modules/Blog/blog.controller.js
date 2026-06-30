@@ -63,3 +63,143 @@ export const createBlog = async (req, res) => {
         })
     }
 }
+
+export const getUserBlogs = async (req, res) => {
+    try {
+        const userId = req.userId
+        if (!userId) {
+            return res.status(400).json({ success: false, message: "Unauthorized User" })
+        }
+        const blogs = await Blog.find({ author: userId }).sort({ createdAt: -1 })
+        return res.status(200).json({ success: true, blogs })
+    }catch (err) {
+        console.log("Error:", err);
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        })
+    }
+}
+
+export const getAllBlogs = async (req, res) => {
+    try{
+        const blogs = await Blog.find().sort({ createdAt: -1 }).populate("author", "name email profileImg")
+        return res.status(200).json({ success: true, blogs })
+    }catch (err) {
+        console.log("Error:", err);
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        })
+    }
+}
+
+export const getSingleBlog = async (req, res) => {
+    const { slug } = req.params
+    if(!slug){
+        return res.status(400).json({ success: false, message: "Missing required details" })
+    }
+    try{
+        const blog = await Blog.findOne({slug}).populate("author", "name email profileImg")
+        if(!blog){
+            return res.status(404).json({ success: false, message: "Blog not found" })
+        }
+        return res.status(200).json({ success: true, blog: blog })
+    }catch (err) {
+        console.log("Error:", err);
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        })
+    }
+}
+
+export const deleteBlog = async (req, res) => {
+    const { slug } = req.params
+    if(!slug){
+        return res.status(400).json({ success: false, message: "Missing required details" })
+    }
+    try{
+        const blog = await Blog.findOne({slug})
+        if(!blog){
+            return res.status(404).json({ success: false, message: "Blog not found" })
+        }
+
+        const userId = req.userId
+        if(blog.author.toString() !== userId){
+            return res.status(403).json({ success: false, message: "Unauthorized User" })
+        }
+
+        await cloudinary.uploader.destroy(blog.coverImage.publicId);
+        await blog.deleteOne()
+        return res.status(200).json({ success: true, message: "Blog deleted successfully" })
+
+    }catch (err) {
+        console.log("Error:", err);
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        })
+    }
+}
+
+export const updateBlog = async (req, res) => {
+    const { slug } = req.params
+    if(!slug){
+        return res.status(400).json({ success: false, message: "Missing required details" })
+    }
+    try{
+        const blog = await Blog.findOne({slug})
+        if(!blog){
+            return res.status(404).json({ success: false, message: "Blog not found" })
+        }
+
+        const userId = req.userId
+        if(blog.author.toString() !== userId){
+            return res.status(403).json({ success: false, message: "Unauthorized User" })
+        }
+
+        const { title, content, category, tags, visibility, allowComments } = req.body
+
+        if(title){
+            blog.title = title
+            blog.slug = slugify(title, {
+                lower: true,
+                strict: true
+            })
+        }
+        if(content) blog.content = content
+        if(category) blog.category = category
+        if(tags) blog.tags = Array.isArray(tags) ? tags : tags.split(",").map(tag => tag.trim())
+        if(visibility) blog.visibility = visibility
+        if(allowComments !== undefined) blog.allowComments = allowComments
+
+        await blog.save()
+        
+        return res.status(200).json({ success: true, message: "Blog Updated successfully" })
+
+    }catch (err) {
+        console.log("Error:", err);
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        })
+    }
+}
+
+export const getBlogsByCategory = async (req, res) => {
+    const { category } = req.params
+    if(!category){
+        return res.status(400).json({ success: false, message: "Missing required details" })
+    }
+    try{
+        const blogs = await Blog.find({category}).sort({ createdAt: -1 }).populate("author", "name email profileImg")
+        return res.status(200).json({ success: true, blogs })
+    }catch (err) {
+        console.log("Error:", err);
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        })
+    }
+}

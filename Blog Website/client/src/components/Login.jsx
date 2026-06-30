@@ -4,6 +4,8 @@ import { ArrowRight, Lock, Mail, Eye, EyeOff, ArrowLeft, CircleDashed } from "lu
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { LOGIN_ROUTE } from "../constants/route";
+import userAuthStore from "../store/authStore";
+
 
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
@@ -12,19 +14,22 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
 
+    const setUser = userAuthStore((state) => state.setUser)
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true)
-        try{
-            const {data} = await api.post(LOGIN_ROUTE,{
+        try {
+            const { data } = await api.post(LOGIN_ROUTE, {
                 email, password
             })
             navigate("/")
             console.log(data)
-        }catch(err){
+            setUser(data.user)
+        } catch (err) {
             console.log(err)
             setError(err.response.data.message)
-        }finally{
+        } finally {
             setLoading(false)
         }
     };
@@ -114,7 +119,7 @@ export default function LoginPage() {
                                     autoComplete="current-password"
                                     required
                                     value={password}
-                                    onChange={(e) => setPassword(e.target.value) }
+                                    onChange={(e) => setPassword(e.target.value)}
                                     className="block w-full pl-10 pr-10 py-2.5 sm:text-sm bg-[#FCFCFA] border border-stone-200 rounded-xl text-stone-900 placeholder-stone-400 focus:outline-none focus:border-[#0077CC] focus:ring-1 focus:ring-[#0077CC] transition-all"
                                     placeholder="••••••••"
                                 />
@@ -136,24 +141,26 @@ export default function LoginPage() {
                                 type="submit"
                                 className="w-full flex justify-center items-center gap-2 py-2.5 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-[#0077CC] hover:bg-[#005FA3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0077CC] transition-colors duration-200"
                             >
-                            {
-                                loading ? <CircleDashed size={14} className=" animate-spin" /> :
-                                <p className="flex items-center gap-2">Sign In <ArrowRight size={14} /></p>
-                            }
-                                
+                                {
+                                    loading ? <CircleDashed size={14} className=" animate-spin" /> :
+                                        <p className="flex items-center gap-2">Sign In <ArrowRight size={14} /></p>
+                                }
+
                             </motion.button>
                         </div>
-                        { error && 
-                        <div className="text-red-500 text-sm mt-2 flex items-center gap-2">{error}</div>
+                        {error &&
+                            <div className="text-red-500 text-sm mt-2 flex items-center gap-2">{error}</div>
                         }
                     </form>
                     <p className="mt-3 flex gap-2 flex-col items-center justify-center text-sm text-stone-500">
-                        Don't have an account ??{" "}
-                        <p
+                        <span>Don't have an account ??{" "}</span>
+                        <button
+                            type="button"
                             onClick={() => navigate("/sign-up")}
-                            className="font-medium text-[#0077CC] hover:text-[#005FA3] underline underline-offset-4 transition-colors">
-                            create a new reader account
-                        </p>
+                            className="font-medium text-[#0077CC] hover:text-[#005FA3] underline underline-offset-4 transition-colors"
+                        >
+                            Create a new reader account
+                        </button>
                     </p>
 
                 </motion.div>

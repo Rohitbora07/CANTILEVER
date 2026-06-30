@@ -5,6 +5,7 @@ import { sendMail } from "../../config/nodemailer.js";
 import { welcomeEmailTemplate } from "../../templates/welcomeEmail.js";
 import { verificationOtpTemplate } from "../../templates/verificationOtpTemplate.js";
 import { passwordResetOtpTemplate } from "../../templates/resetPasswordOtpTemplate.js";
+import cloudinary from "../../config/cloudinary.js";
 
 export const userLogin = async (req, res) => {
     const { email, password } = req.body
@@ -36,7 +37,16 @@ export const userLogin = async (req, res) => {
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
 
-        return res.status(200).json({ success: true, message: "Login successful" })
+        return res.status(200).json({
+            success: true,
+            message: "Login successful",
+            user: {
+                id: user._id,
+                email: user.email,
+                name: user.name,
+                role: user.role
+            }
+        })
     } catch (err) {
         console.log(err)
         return res.status(500).json({
@@ -93,7 +103,13 @@ export const userRegister = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "User created successfully"
+            message: "User created successfully",
+            user: {
+                id: user._id,
+                email: user.email,
+                name: user.name,
+                role: user.role
+            }
         })
 
     } catch (err) {
@@ -174,7 +190,7 @@ export const sendVerifyOtp = async (req, res) => {
 export const verifyEmail = async (req, res) => {
 
     const { otp } = req.body
-    const  userId  = req.userId
+    const userId = req.userId
 
     if (!otp || !userId) {
         return res.status(400).json({ success: false, message: "Missing details" })
@@ -191,7 +207,7 @@ export const verifyEmail = async (req, res) => {
             return res.status(400).json({ success: false, message: "Invalid Otp" })
         }
 
-        if(user.emailOtpExpiry < Date.now()) {
+        if (user.emailOtpExpiry < Date.now()) {
             return res.status(400).json({ success: false, message: "Otp has expired" })
         }
 
@@ -254,7 +270,7 @@ export const resetOtp = async (req, res) => {
 
 export const passReset = async (req, res) => {
     const { otp, newPassword } = req.body
-    const  userId  = req.userId
+    const userId = req.userId
 
     if (!otp || !userId || !newPassword) {
         return res.status(400).json({ success: false, message: "Missing details" })
@@ -269,7 +285,7 @@ export const passReset = async (req, res) => {
         if (user.passResetOtp === '' || user.passResetOtp !== otp) {
             return res.status(400).json({ success: false, message: "Invalid Otp" })
         }
-        if(user.passResetOtpExpiry < Date.now()) {
+        if (user.passResetOtpExpiry < Date.now()) {
             return res.status(400).json({ success: false, message: "Otp has expired" })
         }
 
@@ -290,4 +306,67 @@ export const passReset = async (req, res) => {
             message: "Internal Server Error"
         })
     }
-} 
+}
+
+export const getCurrentUser = async (req, res) => {
+    const userId = req.userId
+    if (!userId) {
+        return res.status(400).json({ success: false, message: "Missing userId" })
+    }
+    try {
+        const user = await User.findById(userId).select("-password -VerificationOtp -emailOtpExpiry -passResetOtp -passResetOtpExpiry")
+        if (!user) {
+            return res.status(400).json({ success: false, message: "User not found" })
+        }
+        return res.status(200).json({ success: true, user })
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        })
+    }
+}
+
+
+export const updateUserProfile = async (req, res) => {
+    const { name, bio, github, instagram, linkedin, twitter, profileImg, location } = req.body
+    const userId = req.userId
+    if (!userId) {
+        return res.status(400).json({ success: false, message: "Missing userId" })
+    }
+    try {
+        const user = await User.findById(userId)
+        if (!user) {
+            return res.status(400).json({ success: false, message: "User not found" })
+        }
+
+        let uploadImg;
+        if (req.file) {
+            uploadImg = await cloudinary.uploader.upload(req.file.path,
+                {
+                    resource_type: 'image',
+                    folder: "user"
+                })
+        }
+
+        user.name = name || user.name
+        user.bio = bio || user.bio
+        user.github = github || user.github
+        user.instagram = instagram || user.instagram
+        user.linkedin = linkedin || user.linkedin
+        user.twitter = twitter || user.twitter
+        user.profileImg = profileImg || user.profileImg
+        user.location = location || user.location
+        if(uploadImg) user.profileImg = uploadImg.secure_url
+
+        await user.save()
+        return res.status(200).json({ success: true, message: "Profile updated successfully", user })
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        })
+    }
+}
