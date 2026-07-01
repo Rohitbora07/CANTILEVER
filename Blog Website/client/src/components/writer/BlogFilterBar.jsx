@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Search, ChevronDown, SlidersHorizontal } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
-const tabs = ["All", "Published", "Draft", "Archived"];
+const tabs = ["All", "Published", "Draft"];
 
 const sortOptions = [
     "Newest first",

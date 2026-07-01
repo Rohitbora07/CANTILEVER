@@ -1,4 +1,5 @@
 import User from "./user.model.js";
+import Blog from "../Blog/blog.model.js";
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import { sendMail } from "../../config/nodemailer.js";
@@ -370,3 +371,39 @@ export const updateUserProfile = async (req, res) => {
         })
     }
 }
+
+export const getUserProfile = async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        const user = await User.findById(userId)
+            .select("-password -VerificationOtp -emailOtpExpiry -passResetOtp -passResetOtpExpiry");
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        const blogs = await Blog.find({
+            author: userId,
+            status: "published",
+            visibility: "public"
+        })
+        .select("title slug coverImage views likes commentsCount createdAt")
+        .sort({ createdAt: -1 });
+
+        return res.status(200).json({
+            success: true,
+            user,
+            blogs
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};

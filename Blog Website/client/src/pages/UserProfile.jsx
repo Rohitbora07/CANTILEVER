@@ -3,8 +3,37 @@ import ProfileHeader from "../components/profile/ProfileHeader";
 import ProfileStats from "../components/profile/ProfileStats";
 import ProfileBlogGrid from "../components/profile/ProfileBlogGrid";
 import ProfileSidebar from "../components/profile/ProfileSidebar";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import api from "../api/axios";
+import  userAuthStore  from "../store/authStore";
+import { USER_DETAIL_ROUTE } from "../constants/route";
 
 export default function UserProfile() {
+
+    const { userId } = useParams()
+    const [blogs, setBlogs] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const [user, setUser] = useState(null)
+
+
+    useEffect(() => {
+        const getUserBlogs = async () => {
+            try {
+                setLoading(true);
+                const { data } = await api.get(USER_DETAIL_ROUTE(userId));
+                console.log(data)
+                setBlogs(data.blogs);
+                setUser(data.user)
+            } catch (error) {
+                console.error("Error fetching user blogs:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        if (userId) getUserBlogs();
+    }, [userId, user]);
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -14,7 +43,7 @@ export default function UserProfile() {
         >
             {/* Header: cover + avatar + name + bio + socials */}
             <div className="bg-white border-b border-stone-100 pb-0">
-                <ProfileHeader />
+                <ProfileHeader user={user} />
             </div>
 
             {/* Stats bar */}

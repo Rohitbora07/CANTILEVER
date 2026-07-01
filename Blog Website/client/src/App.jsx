@@ -10,6 +10,7 @@ import MyBlogs from './pages/writer/MyBlog'
 import UserProfile from './pages/UserProfile'
 import UpdateProfile from './pages/UpdateProfile'
 import DangerZone from './components/settings/DangerZone'
+import BlogDetails from './pages/BlogDetails'
 function App() {
   const location = useLocation()
   const hideLayout = ["/sign-in", "/sign-up","my-blogs"].includes(location.pathname);
@@ -20,13 +21,15 @@ function App() {
       <Route path="/" element={<Home/>} />
       <Route path="/sign-in" element={<LoginPage/>} />
       <Route path="/sign-up" element={<SignUp/>} />
-      <Route path="/create-blog" element={<CreateBlog/>} />
+      <Route path="/blog/create" element={<CreateBlog/>} />
       <Route path="/dashboard" element={<WriterDashboard />} />
-      <Route path="/my-blogs" element={<MyBlogs/>} />
-      <Route path='/profile' element={<UserProfile />} />
+      <Route path="/user/:userId/blogs" element={<MyBlogs/>} />
+      <Route path='/profile/:userId' element={<UserProfile />} />
       <Route path='/update' element={<UpdateProfile />} />
       <Route path='/profile/update' element={<UpdateProfile />} />
       <Route path='/profile/security' element={<DangerZone />} />
+      <Route path='/single' element={<BlogDetails />} />
+      <Route path='/blog/:slug' element={<BlogDetails />} />
     </Routes>
     {!hideLayout && <Footer />}
 

@@ -4,6 +4,7 @@ import {
     Eye, Heart, MessageSquare, Bookmark,
     MoreHorizontal, Edit2, Trash2, ExternalLink, Copy,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const statusStyles = {
     Published: "bg-emerald-50 text-emerald-600 border border-emerald-100",
@@ -14,17 +15,20 @@ const statusStyles = {
 export default function BlogGridCard({ blog, delay = 0 }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
+    const navigate = useNavigate()
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
+            onClick={() => navigate(`/blog/${blog.slug}`)}
             transition={{ duration: 0.35, delay, ease: "easeOut" }}
             className="group bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
         >
             {/* Cover */}
             <div className="relative overflow-hidden" style={{ aspectRatio: "16/9" }}>
                 <img
-                    src={blog.cover}
+                    src={blog.coverImage.url}
                     alt={blog.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />

@@ -1,7 +1,8 @@
 import express from "express"
-import { getCurrentUser, passReset, resetOtp, sendVerifyOtp, userLogin, userLogout, userRegister, verifyEmail, updateUserProfile } from "./user.controller.js"
+import { getCurrentUser, passReset, resetOtp, sendVerifyOtp, userLogin, userLogout, userRegister, verifyEmail, updateUserProfile, getUserProfile } from "./user.controller.js"
 import { userAuth } from "../../middlewares/user.auth.js"
 import upload from "../../middlewares/upload.js"
+import { getUserBlogs } from "../Blog/blog.controller.js"
 
 const userRouter = express.Router()
 
@@ -16,5 +17,7 @@ userRouter.post("/send-reset-otp", userAuth, resetOtp)
 userRouter.post("/reset-password", userAuth, passReset)
 userRouter.get("/me", userAuth, getCurrentUser)
 userRouter.put("/update-profile", userAuth, upload.single("profileImg"),updateUserProfile)
+userRouter.get("/:userId/blogs", userAuth, getUserBlogs)
+userRouter.get("/profile/:userId", userAuth, getUserProfile)
 
 export default userRouter

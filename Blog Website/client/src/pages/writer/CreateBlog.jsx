@@ -5,6 +5,7 @@ import BlogEditorToolbar from "../../components/writer/BlogEditorToolbar";
 import PublishSidebar from "../../components/writer/PublishSidebar";
 import api from "../../api/axios";
 import { CREATE_BLOG } from "../../constants/route";
+import { useNavigate } from "react-router-dom";
 
 const wordCount = (text) => {
     const words = text.trim().split(/\s+/).filter(Boolean);
@@ -23,8 +24,12 @@ export default function CreateBlog() {
     const [allowComments, setAllowComments] = useState(true);
     const [tags, setTags] = useState([]);
 
+    const [slug, setSlug] = useState("")
+
     const words = wordCount(content);
     const minutes = readTime(words);
+
+    const navigate = useNavigate()
 
 
     
@@ -35,12 +40,16 @@ export default function CreateBlog() {
             formData.append("title", title)
             formData.append("content", content)
             formData.append("category", category)
-            formData.append("tags", JSON.stringify(tags))
+            tags.forEach( tag => {
+                formData.append("tags", tag)
+            })
             formData.append("visibility", visibility)
             formData.append("coverImage", coverImage)
             formData.append("allowComments", allowComments)
             const {data} = await api.post(CREATE_BLOG,formData)
-            console.log(data)
+            console.log(data.blog)
+            setSlug(data.blog.slug)
+            navigate(`/blog/${slug}`)
         } catch (err) {
             console.log("Error:", err.response.data.message)
         }

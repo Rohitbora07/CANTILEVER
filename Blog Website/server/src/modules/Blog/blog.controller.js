@@ -66,10 +66,11 @@ export const createBlog = async (req, res) => {
 
 export const getUserBlogs = async (req, res) => {
     try {
-        const userId = req.userId
+        const {userId} = req.params
         if (!userId) {
             return res.status(400).json({ success: false, message: "Unauthorized User" })
         }
+        
         const blogs = await Blog.find({ author: userId }).sort({ createdAt: -1 })
         return res.status(200).json({ success: true, blogs })
     }catch (err) {
@@ -100,7 +101,7 @@ export const getSingleBlog = async (req, res) => {
         return res.status(400).json({ success: false, message: "Missing required details" })
     }
     try{
-        const blog = await Blog.findOne({slug}).populate("author", "name email profileImg")
+        const blog = await Blog.findOne({slug}).populate("author", "name email profileImg bio")
         if(!blog){
             return res.status(404).json({ success: false, message: "Blog not found" })
         }
