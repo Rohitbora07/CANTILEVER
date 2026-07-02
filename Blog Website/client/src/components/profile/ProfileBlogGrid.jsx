@@ -2,86 +2,11 @@ import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { Eye, Heart, Bookmark, Clock, ArrowRight } from "lucide-react";
 
-const blogs = [
-    {
-        id: 1,
-        title: "Why TypeScript Is No Longer Optional for Serious Projects",
-        excerpt: "A deep dive into how TypeScript's type system saves thousands of hours in debugging and makes large codebases manageable.",
-        cover: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=700&h=450&fit=crop",
-        category: "Technology",
-        date: "Jun 18, 2025",
-        readTime: 9,
-        views: 11430,
-        likes: 724,
-        bookmarks: 215,
-    },
-    {
-        id: 2,
-        title: "The Rise of Edge Computing: What Developers Need to Know",
-        excerpt: "Edge computing is reshaping how we build and deploy applications. Here's what it means for your next project.",
-        cover: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=700&h=450&fit=crop",
-        category: "Technology",
-        date: "May 8, 2025",
-        readTime: 8,
-        views: 6320,
-        likes: 289,
-        bookmarks: 98,
-    },
-    {
-        id: 3,
-        title: "Science of Sleep: What Research Says About Deep Rest",
-        excerpt: "New research reveals surprising truths about sleep architecture, dreaming, and the habits that actually improve rest quality.",
-        cover: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=700&h=450&fit=crop",
-        category: "Health",
-        date: "Apr 18, 2025",
-        readTime: 7,
-        views: 5410,
-        likes: 331,
-        bookmarks: 120,
-    },
-    {
-        id: 4,
-        title: "Building with Vite in 2025: A Complete Setup Guide",
-        excerpt: "Everything you need to know about setting up a modern Vite project with React, Tailwind, and the tooling you need.",
-        cover: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=700&h=450&fit=crop",
-        category: "Technology",
-        date: "Jun 10, 2025",
-        readTime: 11,
-        views: 8940,
-        likes: 519,
-        bookmarks: 142,
-    },
-    {
-        id: 5,
-        title: "Designing for Accessibility: Beyond the Basics",
-        excerpt: "Accessibility is a design philosophy that makes products better for everyone, not just those with disabilities.",
-        cover: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=700&h=450&fit=crop",
-        category: "Design",
-        date: "May 15, 2025",
-        readTime: 6,
-        views: 2870,
-        likes: 177,
-        bookmarks: 55,
-    },
-    {
-        id: 6,
-        title: "The Psychology Behind Great Product Copy",
-        excerpt: "Words shape how users feel about your product. Learn the psychological principles behind copy that converts.",
-        cover: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=700&h=450&fit=crop",
-        category: "Design",
-        date: "May 30, 2025",
-        readTime: 7,
-        views: 4210,
-        likes: 198,
-        bookmarks: 67,
-    },
-];
-
-const tabs = ["All", "Technology", "Design", "Health"];
-
-export default function ProfileBlogGrid() {
+export default function ProfileBlogGrid({ blogs, user }) {
     const [activeTab, setActiveTab] = useState("All");
+    const myCategory = [...new Set(blogs.map((blog) => blog.category))];
 
+    // console.log(blogs[0].coverImage.url);
     const filtered =
         activeTab === "All" ? blogs : blogs.filter((b) => b.category === activeTab);
 
@@ -89,12 +14,12 @@ export default function ProfileBlogGrid() {
         <div>
             {/* Section heading + tabs */}
             <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-                <h2 className="text-lg font-bold text-stone-900 font-serif">
-                    Articles
+                <h2 className="text-lg font-bold flex gap-1 text-stone-900 font-serif">
+                    Blogs by <p className="text-[#0077CC]">{user?.name}</p>
                 </h2>
 
                 <div className="flex items-center gap-1 border border-stone-200 rounded-xl bg-white p-1">
-                    {tabs.map((tab) => (
+                    {myCategory.map((tab) => (
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
@@ -121,7 +46,7 @@ export default function ProfileBlogGrid() {
                 >
                     {filtered.map((blog, i) => (
                         <motion.article
-                            key={blog.id}
+                            key={blog._id}
                             initial={{ opacity: 0, y: 16 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.35, delay: 0.05 * i }}
@@ -129,7 +54,7 @@ export default function ProfileBlogGrid() {
                         >
                             <div className="overflow-hidden" style={{ aspectRatio: "16/9" }}>
                                 <img
-                                    src={blog.cover}
+                                    src={blog?.coverImage.url}
                                     alt={blog.title}
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 />

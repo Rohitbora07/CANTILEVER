@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
     passResetOtpExpiry: {
         type: Date,
     },
+    backgroundImg: {
+        type: String,
+        required: false
+    },
     profileImg: {
         type: String,
         required: false
@@ -67,8 +71,38 @@ const userSchema = new mongoose.Schema({
     twitter: {
         type: String,
         default: ""
-    }
-})
+    },
+    totalLikes: {
+        type: Number,
+        default: 0
+    },
+    totalViews: {
+        type: Number,
+        default: 0
+    },
+    totalBlogs: {
+        type: Number,
+        default: 0
+    },
+    totalFollowers: {
+        type: Number,
+        default: 0
+    },
+    totalFollowing: {
+        type: Number,
+        default: 0
+    },
+    followers: [{   
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: []
+    }],
+    following: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: []
+    }],
+},{timestamps: true})
 
 const User = mongoose.models.User || mongoose.model("User", userSchema)
 

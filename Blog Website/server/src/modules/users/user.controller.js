@@ -331,7 +331,7 @@ export const getCurrentUser = async (req, res) => {
 
 
 export const updateUserProfile = async (req, res) => {
-    const { name, bio, github, instagram, linkedin, twitter, profileImg, location } = req.body
+    const { name, bio, github, instagram, linkedin, twitter, profileImg, location, backgroundImg } = req.body
     const userId = req.userId
     if (!userId) {
         return res.status(400).json({ success: false, message: "Missing userId" })
@@ -343,8 +343,17 @@ export const updateUserProfile = async (req, res) => {
         }
 
         let uploadImg;
-        if (req.file) {
-            uploadImg = await cloudinary.uploader.upload(req.file.path,
+        if (req.files && req.files.profileImg && req.files.profileImg[0]) {
+            uploadImg = await cloudinary.uploader.upload(req.files.profileImg[0].path,
+                {
+                    resource_type: 'image',
+                    folder: "user"
+                })
+        }
+        let uploadBackgroundImg;
+
+        if (req.files && req.files.backgroundImg && req.files.backgroundImg[0]) {
+            uploadBackgroundImg = await cloudinary.uploader.upload(req.files.backgroundImg[0].path,
                 {
                     resource_type: 'image',
                     folder: "user"
@@ -359,7 +368,9 @@ export const updateUserProfile = async (req, res) => {
         user.twitter = twitter || user.twitter
         user.profileImg = profileImg || user.profileImg
         user.location = location || user.location
+        // user.backgroundImg = backgroundImg || user.backgroundImg
         if(uploadImg) user.profileImg = uploadImg.secure_url
+        if(uploadBackgroundImg) user.backgroundImg = uploadBackgroundImg.secure_url
 
         await user.save()
         return res.status(200).json({ success: true, message: "Profile updated successfully", user })
@@ -391,7 +402,7 @@ export const getUserProfile = async (req, res) => {
             status: "published",
             visibility: "public"
         })
-        .select("title slug coverImage views likes commentsCount createdAt")
+        .select("title slug coverImage views likes commentsCount createdAt category tags")
         .sort({ createdAt: -1 });
 
         return res.status(200).json({

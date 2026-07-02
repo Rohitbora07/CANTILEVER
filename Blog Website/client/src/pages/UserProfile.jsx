@@ -6,33 +6,39 @@ import ProfileSidebar from "../components/profile/ProfileSidebar";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../api/axios";
-import  userAuthStore  from "../store/authStore";
+// import  userAuthStore  from "../store/authStore";
 import { USER_DETAIL_ROUTE } from "../constants/route";
 
 export default function UserProfile() {
 
     const { userId } = useParams()
     const [blogs, setBlogs] = useState(null)
-    const [loading, setLoading] = useState(false)
+    // const [loading, setLoading] = useState(false)
     const [user, setUser] = useState(null)
 
 
     useEffect(() => {
         const getUserBlogs = async () => {
             try {
-                setLoading(true);
+                // setLoading(true);
                 const { data } = await api.get(USER_DETAIL_ROUTE(userId));
-                console.log(data)
+                // console.log(data)    
                 setBlogs(data.blogs);
                 setUser(data.user)
             } catch (error) {
                 console.error("Error fetching user blogs:", error);
-            } finally {
-                setLoading(false);
             }
         };
         if (userId) getUserBlogs();
     }, [userId, user]);
+
+    if (!user || !blogs) {
+        return (
+            <div className="min-h-screen bg-stone-50 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#0077CC]"></div>
+            </div>
+        );
+    }
 
     return (
         <motion.div
@@ -48,7 +54,7 @@ export default function UserProfile() {
 
             {/* Stats bar */}
             <div className="bg-white border-b border-stone-100">
-                <ProfileStats />
+                <ProfileStats user={user} />
             </div>
 
             {/* Body: blog grid + sidebar */}
@@ -56,11 +62,11 @@ export default function UserProfile() {
                 <div className="flex gap-8 xl:gap-12 items-start">
                     {/* Blog grid */}
                     <div className="flex-1 min-w-0">
-                        <ProfileBlogGrid />
+                        <ProfileBlogGrid blogs={blogs} user={user}/>
                     </div>
 
                     {/* Sidebar */}
-                    <ProfileSidebar />
+                    <ProfileSidebar blogs={blogs} />
                 </div>
             </div>
         </motion.div>

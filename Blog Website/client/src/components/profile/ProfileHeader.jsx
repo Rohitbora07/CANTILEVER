@@ -1,30 +1,18 @@
 import { motion } from "motion/react";
-import {
-    Globe,
-    MapPin, CalendarDays, UserPlus, UserCheck,
-} from "lucide-react";
+import {MapPin, CalendarDays, UserPlus, UserCheck,} from "lucide-react";
 // import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa"
-import { useState } from "react";
+import { useState } from "react"
 
-
-
-// const socials = [
-//     { icon: Globe, label: user.website, href: "#" },
-//     { icon: FaGithub, label: user.github, href: "#" },
-//     { icon: FaTwitter, label: user.twitter, href: "#" },
-//     { icon: FaLinkedin, label: user.linkedin, href: "#" },
-// ];
 
 export default function ProfileHeader({ user }) {
     const [following, setFollowing] = useState(false);
+        const makeDate = (date) => {
+            const createdAt = new Date(date);
+            const options = { year: 'numeric', month: 'long' };
+            return createdAt.toLocaleDateString(undefined, options);
+        }
 
-    if (!user) {
-        return (
-            <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#0077CC]"></div>
-            </div>
-        );
-    }
+
     return (
         <div>
             <motion.div
@@ -35,7 +23,7 @@ export default function ProfileHeader({ user }) {
                 style={{ aspectRatio: "21/5" }}
             >
                 <img
-                    src={user.backImg || user.profileImg}
+                    src={user.backgroundImg}
                     alt="Cover"
                     className="w-full h-full object-cover"
                 />
@@ -107,7 +95,7 @@ export default function ProfileHeader({ user }) {
                         </span>
                         <span className="flex items-center gap-1.5 text-xs text-stone-500">
                             <CalendarDays size={13} className="text-stone-400" />
-                            Joined {user.joinedDate}
+                            Joined {user && makeDate(user.createdAt)}
                         </span>
                     </div>
 

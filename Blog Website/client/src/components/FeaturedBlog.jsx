@@ -3,23 +3,9 @@ import { motion } from "motion/react";
 import { Star, Clock3, Calendar, Eye, Heart, ArrowRight } from "lucide-react";
 
 
-const FEATURED_BLOG = {
-    title: "The Architecture of Craftsmanship: Balancing Design Integrity with Scalable Systems",
-    description: "An inquiry into modern digital publishing platforms and code craftsmanship. We look beneath the surface layer of contemporary interfaces to see what choices foster lasting creative agency.",
-    category: "Design Philosophy",
-    image: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=1200&auto=format&fit=crop&q=80",
-    readTime: "8 min read",
-    date: "October 24, 2026",
-    views: "4.2K",
-    likes: 1240,
-    author: {
-        name: "Thomas Wright",
-        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&q=80"
-    }
-};
 
-export default function FeaturedBlog() {
-    const blog = FEATURED_BLOG;
+export default function FeaturedBlog({blog}) {
+    // const blog = FEATURED_BLOG;
 
     return (
         <section className="mb-16">
@@ -38,9 +24,9 @@ export default function FeaturedBlog() {
 
                 <div className="relative h-72 sm:h-96 overflow-hidden bg-stone-100">
                     <motion.img
-                        whileHover={{ scale: 1.5 }}
+                        whileHover={{ scale: 1.1 }}
                         transition={{ duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }}
-                        src={blog.image}
+                        src={blog.coverImage.url}
                         alt={blog.title}
                         className="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-500"
                     />
@@ -60,16 +46,16 @@ export default function FeaturedBlog() {
                         {blog.title}
                     </h3>
 
-                    <p className="text-stone-600 font-normal leading-relaxed text-base mb-8 max-w-3xl">
+                    {/* <p className="text-stone-600 font-normal leading-relaxed text-base mb-8 max-w-3xl">
                         {blog.description}
-                    </p>
+                    </p> */}
 
 
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-6 border-t border-stone-100">
 
                         <div className="flex items-center gap-3.5">
                             <img
-                                src={blog.author.avatar}
+                                src={blog.author.profileImg}
                                 alt={blog.author.name}
                                 className="w-10 h-10 rounded-full object-cover ring-2 ring-stone-200 bg-stone-50"
                             />
@@ -78,12 +64,12 @@ export default function FeaturedBlog() {
                                 <div className="flex items-center gap-3.5 text-xs text-stone-400 mt-1">
                                     <span className="flex items-center gap-1.5">
                                         <Clock3 size={12} className="text-stone-400" />
-                                        {blog.readTime}
+                                        {blog.readTime || "-"}
                                     </span>
                                     <span className="w-1 h-1 rounded-full bg-stone-300" />
                                     <span className="flex items-center gap-1.5">
                                         <Calendar size={12} className="text-stone-400" />
-                                        {blog.date}
+                                        {blog.date || "-"}
                                     </span>
                                 </div>
                             </div>
@@ -94,16 +80,15 @@ export default function FeaturedBlog() {
                             <div className="flex items-center gap-4 text-xs text-stone-500 font-medium">
                                 <span className="flex items-center gap-1.5">
                                     <Eye size={13} className="text-stone-400" />
-                                    {blog.views}
+                                    {blog.views || "-"}
                                 </span>
                                 <span className="flex items-center gap-1.5">
                                     <Heart size={13} className="text-stone-400" />
-                                    {blog.likes.toLocaleString()}
+                                    {/* {blog.likes.toLocaleString()} */}
                                 </span>
                             </div>
 
                             <motion.button
-                                whileHover={{ y: -2 }}
                                 whileTap={{ scale: 0.98 }}
                                 transition={{ duration: 0.2 }}
                                 className="flex items-center gap-2 px-5 py-2.5 bg-[#0077CC] hover:bg-[#005FA3] text-white text-sm font-medium rounded-xl shadow-sm transition-colors duration-200"

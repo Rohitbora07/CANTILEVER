@@ -15,7 +15,7 @@ export function BlogCard({ blog, index }) {
                 <motion.img
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.5, ease: "easeInOut" }}
-                    src={blog.image}
+                    src={blog.coverImage.url}
                     alt={blog.title}
                     className="w-full h-full object-cover grayscale-[10%]"
                 />
@@ -39,31 +39,31 @@ export function BlogCard({ blog, index }) {
                         {blog.title}
                     </h3>
                     <p className="text-sm text-stone-600 leading-relaxed mb-5 line-clamp-2">
-                        {blog.description}
+                        {/* {blog.description} */}
                     </p>
                 </div>
 
                 <div className="flex items-center justify-between pt-4 border-t border-stone-100 mt-auto">
                     <div className="flex items-center gap-2.5">
                         <img
-                            src={blog.author.avatar}
+                            src={blog.author.profileImg}
                             alt={blog.author.name}
                             className="w-7 h-7 rounded-full object-cover ring-1 ring-stone-200"
                         />
                         <div>
                             <p className="text-xs font-medium text-stone-800">{blog.author.name}</p>
-                            <p className="text-[10px] text-stone-400 font-mono mt-0.5">{blog.date}</p>
+                            <p className="text-[10px] text-stone-400 font-mono mt-0.5">{blog.createdAt}</p>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-3 text-[11px] text-stone-500 font-medium">
                         <span className="flex items-center gap-1">
                             <Clock3 size={11} className="text-stone-400" />
-                            {blog.readTime}
+                            {blog.readTime || "-"} min
                         </span>
                         <span className="flex items-center gap-1">
                             <Heart size={11} className="text-stone-400" />
-                            {blog.likes}
+                            {blog.likes || "-"}
                         </span>
                     </div>
                 </div>

@@ -65,6 +65,7 @@ export default function UpdateProfile() {
     const [userGithub, setUserGithub] = useState(user?.github || "");
     const [profileImg, setprofileImg] = useState(user?.profileImg || "");
     const [userLocation, setUserLocation] = useState(user?.location || "");
+    const [userBackgroundImg, setUserBackgroundImg] = useState(user?.backgroundImg || "");
 
     const [lastLoadedUserId, setLastLoadedUserId] = useState(user?.id || null);
 
@@ -77,6 +78,7 @@ export default function UpdateProfile() {
         setUserLinkedIn(user.linkedin || "");
         setUserGithub(user.github || "");
         setprofileImg(user.profileImg || "");
+        setUserBackgroundImg(user.backgroundImg || "");
         setLastLoadedUserId(user.id);
         setUserLocation(user.location || "");
     }
@@ -95,6 +97,7 @@ export default function UpdateProfile() {
             formData.append("linkedin", userLinkedIn);
             formData.append("github", userGithub);
             formData.append("profileImg", profileImg);
+            formData.append("backgroundImg", userBackgroundImg);
             formData.append("location", userLocation);
 
             console.log(profileImg, "asdas")
@@ -115,11 +118,11 @@ export default function UpdateProfile() {
     ];
 
     const navItems = [
-    { key: "profile", label: "Profile", setAction: () => setSecurity(false) },
-    { key: "social", label: "My Blogs" },
-    { key: "notifications", label: "Notifications" },
-    { key: "security", label: "Security", setAction: () => setSecurity(true) },
-];
+        { key: "profile", label: "Profile", setAction: () => setSecurity(false) },
+        { key: "social", label: "My Blogs" },
+        { key: "notifications", label: "Notifications" },
+        { key: "security", label: "Security", setAction: () => setSecurity(true) },
+    ];
 
     return (
         <motion.div
@@ -158,135 +161,137 @@ export default function UpdateProfile() {
 
                     {
                         !security ?
-                        <div className="flex-1 min-w-0 max-w-2xl space-y-5">
+                            <div className="flex-1 min-w-0 max-w-2xl space-y-5">
 
 
-                            <div className="flex lg:hidden items-center gap-1 bg-white border border-stone-200 rounded-xl p-1 mb-6">
-                                {navItems.map(({ key, label }) => (
-                                    <button
-                                        key={key}
-                                        onClick={() => setActiveNav(key)}
-                                        className={`flex-1 text-xs font-semibold py-2 rounded-lg transition-all ${activeNav === key
-                                            ? "bg-[#0077CC] text-white"
-                                            : "text-stone-500 hover:text-stone-800"
-                                            }`}
-                                    >
-                                        {label}
-                                    </button>
-                                ))}
-                            </div>
-
-                            <SettingsSection
-                                title="Profile information"
-                                description="This is how your public profile will appear to other readers and writers."
-                                delay={0.05}
-                            >
-                                <div className="space-y-6">
-                                    <AvatarUpload profile={profileImg} setProfile={setprofileImg} editable={editable} />
-
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                        <Field label="Full name">
-                                            <Input
-                                                icon={User}
-                                                type="text"
-                                                value={userName}
-                                                disabled={!editable}
-                                                placeholder="Your full name"
-                                                onChange={(e) => setUserName(e.target.value)}
-                                            />
-                                        </Field>
-                                        <Field label="Email address">
-                                            <Input
-                                                type="email"
-                                                value={userEmail}
-                                                disabled={!editable}
-                                                onChange={(e) => setUserEmail(e.target.value)}
-                                                placeholder="you@example.com"
-                                            />
-                                        </Field>
-                                    </div>
-
-                                    <Field label="Bio" hint={`${charCount} / ${BIO_LIMIT}`}>
-                                        <Textarea
-                                            rows={4}
-                                            value={userBio}
-                                            disabled={!editable}
-                                            onChange={(e) => setUserBio(e.target.value)}
-                                            placeholder="Tell readers a little about yourself…"
-                                            maxLength={BIO_LIMIT}
-                                        />
-                                    </Field>
-                                    <Field label="Location">
-                                        <Input
-                                            type="text"
-                                            value={userLocation}
-                                            disabled={!editable}
-                                            onChange={(e) => setUserLocation(e.target.value)}
-                                            placeholder="Your location"
-                                        />
-                                    </Field>
-                                </div>
-                            </SettingsSection>
-
-                            <SettingsSection
-                                title="Social links"
-                                description="Add links to your personal website and social profiles."
-                                delay={0.1}
-                            >
-                                <div className="space-y-4">
-                                    {SOCIAL_LINKS.map((link, index) => (
-                                        <Field key={index} label={link.label}>
-                                            <Input
-                                                icon={link.icon}
-                                                type="text"
-                                                value={link.value}
-                                                disabled={!editable}
-                                                onChange={(e) => link.onChange(e.target.value)}
-                                                placeholder={link.placeholder}
-                                            />
-                                        </Field>
+                                <div className="flex lg:hidden items-center gap-1 bg-white border border-stone-200 rounded-xl p-1 mb-6">
+                                    {navItems.map(({ key, label }) => (
+                                        <button
+                                            key={key}
+                                            onClick={() => setActiveNav(key)}
+                                            className={`flex-1 text-xs font-semibold py-2 rounded-lg transition-all ${activeNav === key
+                                                ? "bg-[#0077CC] text-white"
+                                                : "text-stone-500 hover:text-stone-800"
+                                                }`}
+                                        >
+                                            {label}
+                                        </button>
                                     ))}
                                 </div>
-                            </SettingsSection>
 
-                            {
-                                editable ?
-                                    <div className="flex items-center justify-between pt-2 pb-8">
-                                        <p className="text-xs text-stone-400">
-                                            Changes are saved to your public profile immediately.
-                                        </p>
-                                        <motion.button
-                                            whileHover={{ scale: 1.03, y: -1 }}
-                                            whileTap={{ scale: 0.97 }}
-                                            onClick={updateUserProfile}
-                                            className="flex items-center gap-2 text-sm font-semibold text-white bg-[#0077CC] hover:bg-[#005FA3] px-6 py-2.5 rounded-xl transition-colors"
-                                        >
-                                            <CheckCircle2 size={14} />
-                                            Save changes
-                                        </motion.button>
-                                    </div>
-                                    :
-                                    <div className="flex items-center justify-between pt-2 pb-8">
-                                        <p className="text-xs text-stone-400">
-                                            Changes are saved to your public profile immediately.
-                                        </p>
-                                        <motion.button
-                                            whileHover={{ scale: 1.03, y: -1 }}
-                                            whileTap={{ scale: 0.97 }}
-                                            onClick={() => navigate("/profile/update")}
-                                            className="flex items-center gap-2 text-sm font-semibold text-white bg-[#0077CC] hover:bg-[#005FA3] px-6 py-2.5 rounded-xl transition-colors"
-                                        >
-                                            <CheckCircle2 size={14} />
-                                            Edit Profile
-                                        </motion.button>
-                                    </div>
-                            }
+                                <SettingsSection
+                                    title="Profile information"
+                                    description="This is how your public profile will appear to other readers and writers."
+                                    delay={0.05}
+                                >
+                                    <div className="space-y-6">
+                                        <div className="flex gap-20 items-center justify-center">
+                                            <AvatarUpload profile={profileImg} setProfile={setprofileImg} editable={editable} />
+                                            <AvatarUpload profile={userBackgroundImg} setProfile={setUserBackgroundImg} editable={editable} />
+                                        </div>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                            <Field label="Full name">
+                                                <Input
+                                                    icon={User}
+                                                    type="text"
+                                                    value={userName}
+                                                    disabled={!editable}
+                                                    placeholder="Your full name"
+                                                    onChange={(e) => setUserName(e.target.value)}
+                                                />
+                                            </Field>
+                                            <Field label="Email address">
+                                                <Input
+                                                    type="email"
+                                                    value={userEmail}
+                                                    disabled={!editable}
+                                                    onChange={(e) => setUserEmail(e.target.value)}
+                                                    placeholder="you@example.com"
+                                                />
+                                            </Field>
+                                        </div>
 
-                        </div> 
-                        :
-                        <DangerZone />
+                                        <Field label="Bio" hint={`${charCount} / ${BIO_LIMIT}`}>
+                                            <Textarea
+                                                rows={4}
+                                                value={userBio}
+                                                disabled={!editable}
+                                                onChange={(e) => setUserBio(e.target.value)}
+                                                placeholder="Tell readers a little about yourself…"
+                                                maxLength={BIO_LIMIT}
+                                            />
+                                        </Field>
+                                        <Field label="Location">
+                                            <Input
+                                                type="text"
+                                                value={userLocation}
+                                                disabled={!editable}
+                                                onChange={(e) => setUserLocation(e.target.value)}
+                                                placeholder="Your location"
+                                            />
+                                        </Field>
+                                    </div>
+                                </SettingsSection>
+
+                                <SettingsSection
+                                    title="Social links"
+                                    description="Add links to your personal website and social profiles."
+                                    delay={0.1}
+                                >
+                                    <div className="space-y-4">
+                                        {SOCIAL_LINKS.map((link, index) => (
+                                            <Field key={index} label={link.label}>
+                                                <Input
+                                                    icon={link.icon}
+                                                    type="text"
+                                                    value={link.value}
+                                                    disabled={!editable}
+                                                    onChange={(e) => link.onChange(e.target.value)}
+                                                    placeholder={link.placeholder}
+                                                />
+                                            </Field>
+                                        ))}
+                                    </div>
+                                </SettingsSection>
+
+                                {
+                                    editable ?
+                                        <div className="flex items-center justify-between pt-2 pb-8">
+                                            <p className="text-xs text-stone-400">
+                                                Changes are saved to your public profile immediately.
+                                            </p>
+                                            <motion.button
+                                                whileHover={{ scale: 1.03, y: -1 }}
+                                                whileTap={{ scale: 0.97 }}
+                                                onClick={updateUserProfile}
+                                                className="flex items-center gap-2 text-sm font-semibold text-white bg-[#0077CC] hover:bg-[#005FA3] px-6 py-2.5 rounded-xl transition-colors"
+                                            >
+                                                <CheckCircle2 size={14} />
+                                                Save changes
+                                            </motion.button>
+                                        </div>
+                                        :
+                                        <div className="flex items-center justify-between pt-2 pb-8">
+                                            <p className="text-xs text-stone-400">
+                                                Changes are saved to your public profile immediately.
+                                            </p>
+                                            <motion.button
+                                                whileHover={{ scale: 1.03, y: -1 }}
+                                                whileTap={{ scale: 0.97 }}
+                                                onClick={() => navigate("/profile/update")}
+                                                className="flex items-center gap-2 text-sm font-semibold text-white bg-[#0077CC] hover:bg-[#005FA3] px-6 py-2.5 rounded-xl transition-colors"
+                                            >
+                                                <CheckCircle2 size={14} />
+                                                Edit Profile
+                                            </motion.button>
+                                        </div>
+                                }
+
+                            </div>
+                            :
+                            <DangerZone />
                     }
-                    
+
 
                 </div>
             </div>

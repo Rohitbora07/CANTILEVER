@@ -16,7 +16,7 @@ userRouter.post("/verify", userAuth, verifyEmail)
 userRouter.post("/send-reset-otp", userAuth, resetOtp)
 userRouter.post("/reset-password", userAuth, passReset)
 userRouter.get("/me", userAuth, getCurrentUser)
-userRouter.put("/update-profile", userAuth, upload.single("profileImg"),updateUserProfile)
+userRouter.put("/update-profile", userAuth, upload.fields([{ name: "profileImg", maxCount: 1 }, { name: "backgroundImg", maxCount: 1 }]), updateUserProfile)
 userRouter.get("/:userId/blogs", userAuth, getUserBlogs)
 userRouter.get("/profile/:userId", userAuth, getUserProfile)
 

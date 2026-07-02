@@ -1,22 +1,21 @@
 import { motion } from "motion/react";
-import { Eye, Heart, FileText, Users } from "lucide-react";
+import { Eye, Heart, Users, FileText } from "lucide-react";
 
-const stats = [
-    { icon: FileText, label: "Articles", value: "34", color: "#0077CC", bg: "#E0F0FF" },
-    { icon: Eye, label: "Total views", value: "48.3k", color: "#7c3aed", bg: "#f5f3ff" },
-    { icon: Heart, label: "Total likes", value: "12.8k", color: "#e11d48", bg: "#fff1f2" },
-    { icon: Users, label: "Followers", value: "2,140", color: "#059669", bg: "#ecfdf5" },
+
+
+export default function ProfileStats({user}) {
+    const stats = [
+    { icon: Heart, label: "Total likes", value: user?.totalLikes, color: "#e11d48", bg: "#fff1f2" },
+    { icon: Users, label: "Followers", value: user?.followers, color: "#059669", bg: "#ecfdf5" },
+    { icon: Users, label: "Following", value: user?.following, color: "#2563eb", bg: "#eff6ff" },
+    { icon: Eye, label: "Total views", value: user?.totalViews, color: "#f59e0b", bg: "#fffbeb" },
+    { icon: FileText, label: "Total blogs", value: user?.totalBlogs, color: "#7c3aed", bg: "#f3e8ff" }
 ];
-
-export default function ProfileStats() {
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 py-7">
-            {stats.map(({ icon: Icon, label, value, color, bg }, i) => (
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 py-7">
+            {stats.map(({ icon: Icon, label, value, color, bg }) => (
                 <motion.div
                     key={label}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.35, delay: 0.06 * i }}
                     className="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm flex items-center gap-4"
                 >
                     <div
